@@ -74,7 +74,7 @@ var PTM = 100; // conversion ratio for values in arrays above
 var gameOver = false;
 
 var hittingMediumCircles = [];
-var hittingLargeCircles = [];
+var hittingLargeCircles = [];
 
 var Pinball = {showDebug: true};
 
@@ -178,9 +178,11 @@ Pinball.Game.prototype = {
 		mainBody.addChain(guide4Vertices);
 
 		// ADDING BOUNCY FIXTURES
-		game.physics.box2d.restitution = 1;
 		mainBody.addEdge(bouncer1[0], bouncer1[1], bouncer1[2], bouncer1[3]);
 		mainBody.addEdge(bouncer2[0], bouncer2[1], bouncer2[2], bouncer2[3]);
+
+		// SETTING THE RESTITUTION THAT THE CIRCLES WILL HAVE
+		game.physics.box2d.restitution = 1;
 
 		// ADDING THE SMALL CIRCLES
 		for(var i = 0; i < smallCircles.length / 2; i++)
@@ -286,8 +288,27 @@ Pinball.Game.prototype = {
 		cursors = game.input.keyboard.createCursorKeys();
 		},
 
+	constrainVelocity: function(sprite, maxVelocity)
+		{
+		var angle, currVelocitySqr, vx, vy;
+		vx = sprite.velocity.x;
+		vy = sprite.velocity.y;
+		currVelocitySqr = vx * vx + vy * vy;
+
+		if (currVelocitySqr > maxVelocity * maxVelocity)
+			{
+			angle = Math.atan2(vy, vx);
+			vx = Math.cos(angle) * maxVelocity;
+			vy = Math.sin(angle) * maxVelocity;
+			sprite.velocity.x = vx;
+			sprite.velocity.x = vy;
+			}
+		},
+
 	update: function()
 		{
+		//this.constrainVelocity(ballBody, 900);
+
 		// CHECKING IF THE GAME IS OVER
 		if(gameOver==true)
 			{
