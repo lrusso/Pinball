@@ -248,9 +248,41 @@ Pinball.Game.prototype = {
 		this.leftFlipper = new Phaser.Physics.Box2D.Body(this.game, null, -8 * this.PTM, -7.99956 * this.PTM, 2);
 		this.leftFlipper.addPolygon(this.leftFlipperVertices);
 
+		// ADDING THE LEFT FLIPPER SPRITE
+		this.leftFlipperSprite = game.add.graphics(0, 0);
+		this.leftFlipperSprite.beginFill(0xFFFFFF);
+		this.leftFlipperSprite.lineStyle(1, 0xA0A0A0, 1);
+		for(var i = 0; i < this.leftFlipperVertices.length; i=i+2)
+			{
+			if (i==0)
+				{
+				this.leftFlipperSprite.moveTo(this.leftFlipperVertices[i] * 0.10 - 0.0000001, this.leftFlipperVertices[i + 1] * 0.10 - 0.0000001);
+				}
+			this.leftFlipperSprite.lineTo(this.leftFlipperVertices[i] * 0.10, this.leftFlipperVertices[i +1] * 0.10);
+			}
+		this.leftFlipperSprite.endFill();
+		this.leftFlipperSprite.position.x = this.leftFlipper.x * 0.10;
+		this.leftFlipperSprite.position.y = this.leftFlipper.y * 0.10;
+
 		// ADDING THE RIGHT FLIPPER
 		this.rightFlipper = new Phaser.Physics.Box2D.Body(this.game, null, 6.4 * this.PTM, -7.99956 * this.PTM, 2);
 		this.rightFlipper.addPolygon(this.rightFlipperVertices);
+
+		// ADDING THE RIGHT FLIPPER SPRITE
+		this.rightFlipperSprite = game.add.graphics(0, 0);
+		this.rightFlipperSprite.beginFill(0xFFFFFF);
+		this.rightFlipperSprite.lineStyle(1, 0xA0A0A0, 1);
+		for(var i = 0; i < this.rightFlipperVertices.length; i=i+2)
+			{
+			if (i==0)
+				{
+				this.rightFlipperSprite.moveTo(this.rightFlipperVertices[i] * 0.10 - 0.0000001, this.rightFlipperVertices[i + 1] * 0.10 - 0.0000001);
+				}
+			this.rightFlipperSprite.lineTo(this.rightFlipperVertices[i] * 0.10, this.rightFlipperVertices[i +1] * 0.10);
+			}
+		this.rightFlipperSprite.endFill();
+		this.rightFlipperSprite.position.x = this.rightFlipper.x * 0.10;
+		this.rightFlipperSprite.position.y = this.rightFlipper.y * 0.10;
 
 		// SETTING THE FLIPPER JOINTS							(BODYA, BODYB, AX, AY, BX, BY, MOTORSPEED, MOTORTORQUE, MOTORENABLED, LOWERLIMIT, UPPERLIMIT, LIMITENABLED)
 		this.flipperJoints[0] = game.physics.box2d.revoluteJoint(this.pinballBoard, this.leftFlipper,   -8 * this.PTM, -7.99956 * this.PTM, 0, 0, 2, 100, true, -25, 25, true);
@@ -318,6 +350,12 @@ Pinball.Game.prototype = {
 		// THE BALL SPRITE MUST ALWAYS FOLLOW THE BOX2D BALL BODY
 		this.ballSprite.position.x = this.ballBody.x * 0.10 - 6;
 		this.ballSprite.position.y = this.ballBody.y * 0.10 - 6;
+
+		// THE LEFT FLIPPER SPRITE MUST ALWAYS FOLLOW THE BOX2D LEFT FLIPPER
+		this.leftFlipperSprite.angle = this.leftFlipper.angle;
+
+		// THE RIGHT FLIPPER SPRITE MUST ALWAYS FOLLOW THE BOX2D RIGHT FLIPPER
+		this.rightFlipperSprite.angle = this.rightFlipper.angle;
 
 		if(this.cursors.left.isDown)
 			{
