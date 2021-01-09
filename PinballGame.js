@@ -183,13 +183,13 @@ Pinball.Game.prototype = {
 		this.ballBody.setFixtureContactCallback(gutterFixture, this.onHitGutter, this);
 		this.ballBody.bullet = true;
 
-		// SETTING A CALLBACK WHEN HITTING A MEDIUM CIRCLE
+		// SETTING A CALLBACK WHEN THE BALL HITS A MEDIUM CIRCLE
 		for(var i = 0; i < this.mediumCirclesList.length; i++)
 			{
 			this.ballBody.setFixtureContactCallback(this.mediumCirclesList[i], this.hittingMediumCircle, this);
 			}
 
-		// SETTING A CALLBACK WHEN HITTING A LARGE CIRCLE
+		// SETTING A CALLBACK WHEN THE BALL HITS A LARGE CIRCLE
 		for(var i = 0; i < this.largeCirclesList.length; i++)
 			{
 			this.ballBody.setFixtureContactCallback(this.largeCirclesList[i], this.hittingLargeCircle, this);
