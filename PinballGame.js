@@ -140,7 +140,7 @@ Pinball.Game.prototype = {
 			{
 			if (i==0)
 				{
-				this.pinballBoardBlackBackground.moveTo(this.outlineVertices[i] * 0.10, this.outlineVertices[i +1] * 0.10);
+				this.pinballBoardBlackBackground.moveTo(this.outlineVertices[i] * 0.10 - 0.0000001, this.outlineVertices[i + 1] * 0.10 - 0.0000001);
 				}
 			this.pinballBoardBlackBackground.lineTo(this.outlineVertices[i] * 0.10, this.outlineVertices[i +1] * 0.10);
 			}
