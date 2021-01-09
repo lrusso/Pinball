@@ -288,27 +288,8 @@ Pinball.Game.prototype = {
 		cursors = game.input.keyboard.createCursorKeys();
 		},
 
-	constrainVelocity: function(sprite, maxVelocity)
-		{
-		var angle, currVelocitySqr, vx, vy;
-		vx = sprite.velocity.x;
-		vy = sprite.velocity.y;
-		currVelocitySqr = vx * vx + vy * vy;
-
-		if (currVelocitySqr > maxVelocity * maxVelocity)
-			{
-			angle = Math.atan2(vy, vx);
-			vx = Math.cos(angle) * maxVelocity;
-			vy = Math.sin(angle) * maxVelocity;
-			sprite.velocity.x = vx;
-			sprite.velocity.x = vy;
-			}
-		},
-
 	update: function()
 		{
-		//this.constrainVelocity(ballBody, 900);
-
 		// CHECKING IF THE GAME IS OVER
 		if(gameOver==true)
 			{
@@ -325,7 +306,7 @@ Pinball.Game.prototype = {
 			gameOver = false;
 			}
 
-		var flipperSpeed = 20; // RAD/S
+		var flipperSpeed = 15; // RAD/S
 
 		if(cursors.left.isDown)
 			{
