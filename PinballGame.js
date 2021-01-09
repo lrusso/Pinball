@@ -86,6 +86,7 @@ Pinball.Game = function(game)
 	this.scoreLabel = null;
 	this.scoreLabelShadow = null;
 	this.ballBody = null;
+	this.ballSprite = null;
 	this.gameOver = false;
 	this.flipperJoints = [];
 	this.mediumCirclesList = [];
@@ -123,6 +124,7 @@ Pinball.Game.prototype = {
 		this.scoreLabel = null;
 		this.scoreLabelShadow = 0;
 		this.ballBody = null;
+		this.ballSprite = null;
 		this.gameOver = false;
 		this.flipperJoints = [];
 		this.mediumCirclesList = [];
@@ -204,12 +206,15 @@ Pinball.Game.prototype = {
 		game.physics.box2d.restitution = 2;
 		this.pinballBoard.addEdge(this.launcherVertices[0], this.launcherVertices[1], this.launcherVertices[2], this.launcherVertices[3]);
 
-		// CREATING THE BALL
+		// ADDING THE BOX 2D BALL BODY
 		game.physics.box2d.restitution = 0.1;
 		this.ballBody = new Phaser.Physics.Box2D.Body(this.game, null, this.ballStart[0] * this.PTM, this.ballStart[1] * this.PTM);
 		this.ballBody.setCircle(0.64 * this.PTM);
 		this.ballBody.setFixtureContactCallback(gutterFixture, this.onHitGutter, this);
 		this.ballBody.bullet = true;
+
+		// ADDING THE BALL SPRITE
+		this.ballSprite = this.add.sprite(0,0,"ballImg");
 
 		// SETTING A CALLBACK WHEN THE BALL HITS A MEDIUM CIRCLE
 		for(var i = 0; i < this.mediumCirclesList.length; i++)
@@ -237,9 +242,6 @@ Pinball.Game.prototype = {
 		// SETTING THE FLIPPER JOINTS							(BODYA, BODYB, AX, AY, BX, BY, MOTORSPEED, MOTORTORQUE, MOTORENABLED, LOWERLIMIT, UPPERLIMIT, LIMITENABLED)
 		this.flipperJoints[0] = game.physics.box2d.revoluteJoint(this.pinballBoard, this.leftFlipper,   -8 * this.PTM, -7.99956 * this.PTM, 0, 0, 2, 100, true, -25, 25, true);
 		this.flipperJoints[1] = game.physics.box2d.revoluteJoint(this.pinballBoard, this.rightFlipper, 6.4 * this.PTM, -7.99956 * this.PTM, 0, 0, 2, 100, true, -25, 25, true);
-
-		// ADDING THE BALL SPRITE
-		this.ballSprite = this.add.sprite(0,0,"ballImg");
 
 		// ADDING THE SCORE BACKGROUND
 		this.scoreBackground = game.add.graphics();
