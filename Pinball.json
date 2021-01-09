@@ -3,7 +3,7 @@
 	"short_name": "Pinball",
 	"lang": "en-US",
 	"start_url": "https://lrusso.github.io/Pinball/Pinball.htm",
-	"display": "fullscreen",
+	"display": "standalone",
 	"orientation": "portrait",
 	"theme_color": "#000000",
 	"background_color": "#000000",
