@@ -71,7 +71,7 @@ var ballStart = [15.2016, -21.318];
 var ballBody;
 var flipperJoints = [];
 var PTM = 100; // conversion ratio for values in arrays above
-var needReset = false;
+var gameOver = false;
 
 var hittingMediumCircles = [];
 var hittingLargeCircles = [];
@@ -288,14 +288,20 @@ Pinball.Game.prototype = {
 
 	update: function()
 		{
-		if(needReset==true)
+		// CHECKING IF THE GAME IS OVER
+		if(gameOver==true)
 			{
+			// RESTORING THE BALL THE STARTING POSITION
 			ballBody.x = ballStart[0]*PTM;
 			ballBody.y = ballStart[1]*PTM;
+
+			// CLEARING THE BALL VELOCITY
 			ballBody.velocity.x = 0;
 			ballBody.velocity.y = 0;
 			ballBody.angularVelocity = 0;
-			needReset = false;
+
+			// SETTING THAT THE GAME IS NOT OVER
+			gameOver = false;
 			}
 
 		var flipperSpeed = 20; // RAD/S
@@ -324,6 +330,7 @@ Pinball.Game.prototype = {
 		// CHECKING IF THE GAME IS RUNNING IN DEBUG MODE
 		if (Pinball.showDebug==true)
 			{
+			// SHOWING THE DEBUG LAYOUT
 			game.debug.box2dWorld();
 			}
 		},
@@ -340,7 +347,10 @@ Pinball.Game.prototype = {
 
 	updateScore: function(newScore)
 		{
+		// UPDATING THE SCORE WITH THE NEW VALUE
 		this.scoreValue = newScore;
+
+		// UPDATING THE SCORE WITH THE NEW VALUE
 		this.scoreLabel.setText(newScore);
 		},
 
@@ -349,8 +359,8 @@ Pinball.Game.prototype = {
 		// CLEARING THE SCORE
 		this.updateScore(0);
 
-		// THE NEEDRESET OCCURS INSIDE THE WORLD STEP, SO DON'T DO THE ACTUAL RESET HERE
-		needReset = true;
+		// SETTING THAT THE GAME IS OVER
+		gameOver = true;
 		}
 	};
 
