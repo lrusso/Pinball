@@ -73,6 +73,7 @@ Pinball.Game = function(game)
 	this.leftFlipper = null;
 	this.rightFlipper = null;
 
+	this.cursors = null;
 	this.scoreValue = null;
 	this.scoreLabel = null;
 	this.ballBody = null;
@@ -106,6 +107,7 @@ Pinball.Game.prototype = {
 		this.leftFlipper = null;
 		this.rightFlipper = null;
 
+		this.cursors = null;
 		this.scoreValue = 0;
 		this.scoreLabel = null;
 		this.ballBody = null;
@@ -224,32 +226,20 @@ Pinball.Game.prototype = {
 			this.buttonA.sprite.scale.set(0.8);
 			this.buttonA.sprite.tint = 0xA9A9A9;
 			this.buttonA.sprite.inputEnabled = true;
-			this.buttonA.sprite.events.onInputDown.add(function()
-				{
-				cursors.left.isDown = true;
-				},this);
-			this.buttonA.sprite.events.onInputUp.add(function()
-				{
-				cursors.left.isDown = false;
-				},this);
+			this.buttonA.sprite.events.onInputDown.add(function(){this.cursors.left.isDown=true;},this);
+			this.buttonA.sprite.events.onInputUp.add(function(){this.cursors.left.isDown=false;},this);
 
 			// ADDING THE BUTTON B
 			this.buttonB = this.pad.addButton(285, 550, "dpad", "button2-up", "button2-down");
 			this.buttonB.sprite.scale.set(0.8);
 			this.buttonB.sprite.tint = 0xA9A9A9;
 			this.buttonB.sprite.inputEnabled = true;
-			this.buttonB.sprite.events.onInputDown.add(function()
-				{
-				cursors.right.isDown = true;
-				},this);
-			this.buttonB.sprite.events.onInputUp.add(function()
-				{
-				cursors.right.isDown = false;
-				},this);
+			this.buttonB.sprite.events.onInputDown.add(function(){this.cursors.right.isDown=true;},this);
+			this.buttonB.sprite.events.onInputUp.add(function(){this.cursors.right.isDown=false;},this);
 			}
 
 		// GETTING THE CURSOR KEY INPUTS
-		cursors = game.input.keyboard.createCursorKeys();
+		this.cursors = game.input.keyboard.createCursorKeys();
 		},
 
 	update: function()
@@ -270,7 +260,7 @@ Pinball.Game.prototype = {
 			this.gameOver = false;
 			}
 
-		if(cursors.left.isDown)
+		if(this.cursors.left.isDown)
 			{
 			this.flipperJoints[0].SetMotorSpeed(-15);
 			}
@@ -279,7 +269,7 @@ Pinball.Game.prototype = {
 			this.flipperJoints[0].SetMotorSpeed(15);
 			}
 
-		if(cursors.right.isDown)
+		if(this.cursors.right.isDown)
 			{
 			this.flipperJoints[1].SetMotorSpeed(15);
 			}
