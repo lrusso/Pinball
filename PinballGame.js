@@ -146,7 +146,7 @@ Pinball.Game.prototype = {
 		// DRAWING THE PINBALL BOARD BLACK BACKGROUND
 		this.pinballBoardBlackBackground = game.add.graphics(0, 0);
 		this.pinballBoardBlackBackground.beginFill(0x000000);
-		this.pinballBoardBlackBackground.lineStyle(1, 0xA0A0A0, 1);
+		this.pinballBoardBlackBackground.lineStyle(2, 0x5a5a5a, 1);
 		for(var i = 0; i < this.outlineVertices.length; i=i+2)
 			{
 			if (i==0)
@@ -289,7 +289,7 @@ Pinball.Game.prototype = {
 		this.flipperJoints[1] = game.physics.box2d.revoluteJoint(this.pinballBoard, this.rightFlipper, 6.4 * this.PTM, -7.99956 * this.PTM, 0, 0, 2, 100, true, -25, 25, true);
 
 		// ADDING THE BALL LAUNCHER
-		this.add.sprite(143,-107,"launcherImg");
+		this.add.sprite(143,-105,"launcherImg");
 
 		// ADDING THE SCORE BACKGROUND
 		this.scoreBackground = game.add.graphics();
