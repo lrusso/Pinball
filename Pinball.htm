@@ -26,12 +26,21 @@
 	<body>
 		<iframe id="content" src="about:blank"></iframe>
 		<script>
+			function resizeContent()
+				{
+				document.getElementById("content").style.width = window.innerWidth + "px";
+				document.getElementById("content").style.height = window.innerHeight + "px";
+				}
 
 			window.addEventListener("load", function()
 				{
+				// RESIZING THE IFRAME
+				resizeContent();
+
 				// TO KEEP FOCUSING AND RESIZING THE IFRAME (WORKAROUND FOR IOS DEVICES)
 				setInterval(function()
 					{
+					resizeContent();
 					document.getElementById("content").focus();
 					}, 250);
 
@@ -41,6 +50,19 @@
 				// SHOWING THE IFRAME
 				document.getElementById("content").style.display = "block";
 				});
+
+			window.addEventListener("resize", function()
+				{
+				// RESIZING THE IFRAME WHEN THE SCREEN SIZE CHANGES
+				resizeContent();
+				});
+
+			var supportsOrientationChange = "onorientationchange" in window, orientationEvent = supportsOrientationChange ? "orientationchange" : "resize";
+			window.addEventListener(orientationEvent, function()
+				{
+				// RESIZING THE IFRAME WHEN THE SCREEN ORIENTATION CHANGES
+				resizeContent();
+				}, false);
 
 			if ("serviceWorker" in navigator)
 				{
