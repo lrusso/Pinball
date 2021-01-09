@@ -125,9 +125,6 @@ Pinball.Game.prototype = {
 
 	create: function()
 		{
-		// SETTING THE GAME BACKGROUND COLOR
-		game.stage.backgroundColor = "#A0A0A0";
-
 		// ADDING THE BACKGROUND IMAGE
 		this.add.tileSprite(-170, -525, 600, 835, "backgroundImg");
 
