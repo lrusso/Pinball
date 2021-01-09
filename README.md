@@ -2,7 +2,7 @@
 
 Pinball game developed in JavaScript.
 
-![alt screenshot](https://raw.githubusercontent.com/lrusso/Pinball/master/Pinball.png)
+![alt screenshot](https://raw.githubusercontent.com/lrusso/Pinball/main/Pinball.png)
 
 ## Web:
 
