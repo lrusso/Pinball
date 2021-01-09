@@ -70,6 +70,8 @@ Pinball.Game = function(game)
 	this.PTM = 100; // CONVERSION RATIO FOR VALUES IN ARRAYS ABOVE
 
 	this.pinballBoard = null;
+	this.leftFlipper = null;
+	this.rightFlipper = null;
 
 	this.scoreValue = null;
 	this.scoreLabel = null;
@@ -101,6 +103,8 @@ Pinball.Game.prototype = {
 	init: function()
 		{
 		this.pinballBoard = null;
+		this.leftFlipper = null;
+		this.rightFlipper = null;
 
 		this.scoreValue = 0;
 		this.scoreLabel = null;
@@ -182,29 +186,29 @@ Pinball.Game.prototype = {
 		// SETTING A CALLBACK WHEN HITTING A MEDIUM CIRCLE
 		for(var i = 0; i < this.mediumCirclesList.length; i++)
 			{
-			this.ballBody.setFixtureContactCallback(this.mediumCirclesList[i], this.hittingMiddle, this);
+			this.ballBody.setFixtureContactCallback(this.mediumCirclesList[i], this.hittingMediumCircle, this);
 			}
 
 		// SETTING A CALLBACK WHEN HITTING A LARGE CIRCLE
 		for(var i = 0; i < this.largeCirclesList.length; i++)
 			{
-			this.ballBody.setFixtureContactCallback(this.largeCirclesList[i], this.hittingLarge, this);
+			this.ballBody.setFixtureContactCallback(this.largeCirclesList[i], this.hittingLargeCircle, this);
 			}
 
 		// SETTING THE RESTITUTION FOR THE FLIPPERS
 		game.physics.box2d.restitution = 0.1;
 
 		// ADDING THE LEFT FLIPPER
-		var leftpinballBoard = new Phaser.Physics.Box2D.Body(this.game, null, -8 * this.PTM, -7.99956 * this.PTM, 2);
-		leftpinballBoard.addPolygon(this.leftFlipperVertices);
+		this.leftFlipper = new Phaser.Physics.Box2D.Body(this.game, null, -8 * this.PTM, -7.99956 * this.PTM, 2);
+		this.leftFlipper.addPolygon(this.leftFlipperVertices);
 
 		// ADDING THE RIGHT FLIPPER
-		var rightpinballBoard = new Phaser.Physics.Box2D.Body(this.game, null, 6.4 * this.PTM, -7.99956 * this.PTM, 2);
-		rightpinballBoard.addPolygon(this.rightFlipperVertices);
+		this.rightFlipper = new Phaser.Physics.Box2D.Body(this.game, null, 6.4 * this.PTM, -7.99956 * this.PTM, 2);
+		this.rightFlipper.addPolygon(this.rightFlipperVertices);
 
 		// SETTING THE FLIPPER JOINTS							(BODYA, BODYB, AX, AY, BX, BY, MOTORSPEED, MOTORTORQUE, MOTORENABLED, LOWERLIMIT, UPPERLIMIT, LIMITENABLED)
-		this.flipperJoints[0] = game.physics.box2d.revoluteJoint(this.pinballBoard,  leftpinballBoard,  -8 * this.PTM, -7.99956 * this.PTM, 0, 0, 2, 100, true, -25, 25, true);
-		this.flipperJoints[1] = game.physics.box2d.revoluteJoint(this.pinballBoard, rightpinballBoard, 6.4 * this.PTM, -7.99956 * this.PTM, 0, 0, 2, 100, true, -25, 25, true);
+		this.flipperJoints[0] = game.physics.box2d.revoluteJoint(this.pinballBoard, this.leftFlipper,   -8 * this.PTM, -7.99956 * this.PTM, 0, 0, 2, 100, true, -25, 25, true);
+		this.flipperJoints[1] = game.physics.box2d.revoluteJoint(this.pinballBoard, this.rightFlipper, 6.4 * this.PTM, -7.99956 * this.PTM, 0, 0, 2, 100, true, -25, 25, true);
 
 		// ADDING THE SCORE LABEL
 		this.scoreLabel = game.add.text(-155, -515, this.scoreValue, { font: "bold 30px Arial", fill: "#FFF", boundsAlignH: "center", boundsAlignV: "middle" });
@@ -295,13 +299,13 @@ Pinball.Game.prototype = {
 			}
 		},
 
-	hittingMiddle: function()
+	hittingMediumCircle: function()
 		{
 		// ADDING 10 POINTS TO THE SCORE
 		this.updateScore(this.scoreValue + 10);
 		},
 
-	hittingLarge: function()
+	hittingLargeCircle: function()
 		{
 		// ADDING 20 POINTS TO THE SCORE
 		this.updateScore(this.scoreValue + 20);
