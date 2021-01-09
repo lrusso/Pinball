@@ -67,15 +67,17 @@ Pinball.Game = function(game)
 	this.leftFlipperVertices = [560,32,560,-32,0,-64,0,64];
 	this.rightFlipperVertices = [0,64,0,-64,-560,-32,-560,32];
 	this.ballStart = [15.2016, -21.318];
-	this.PTM = 100; // conversion ratio for values in arrays above
+	this.PTM = 100; // CONVERSION RATIO FOR VALUES IN ARRAYS ABOVE
+
+	this.pinballBoard = null;
 
 	this.scoreValue = null;
 	this.scoreLabel = null;
 	this.ballBody = null;
 	this.gameOver = false;
 	this.flipperJoints = [];
-	this.hittingMediumCircles = [];
-	this.hittingLargeCircles = [];
+	this.mediumCirclesList = [];
+	this.largeCirclesList = [];
 	this.isMobileDevice = null;
 
 	// SCALING THE CANVAS SIZE FOR THE GAME
@@ -98,13 +100,15 @@ Pinball.Game.prototype = {
 
 	init: function()
 		{
+		this.pinballBoard = null;
+
 		this.scoreValue = 0;
 		this.scoreLabel = null;
 		this.ballBody = null;
 		this.gameOver = false;
 		this.flipperJoints = [];
-		this.hittingMediumCircles = [];
-		this.hittingLargeCircles = [];
+		this.mediumCirclesList = [];
+		this.largeCirclesList = [];
 		},
 
 	create: function()
@@ -124,20 +128,20 @@ Pinball.Game.prototype = {
 		game.physics.box2d.gravity.y = 5000; // LARGE GRAVITY TO MAKE SCENE FEEL SMALLER
 		game.physics.box2d.friction = 0.1;
 
-		// CREATING THE GROUND BODY
-		var mainBody = new Phaser.Physics.Box2D.Body(this.game, null, 0, 0, 0);
+		// CREATING THE PINBALL BOARD
+		this.pinballBoard = new Phaser.Physics.Box2D.Body(this.game, null, 0, 0, 0);
 
 		// ADDING BOUNCE-LESS FIXTURES
 		game.physics.box2d.restitution = 0.1;
-		mainBody.addLoop(this.outlineVertices);
-		mainBody.addLoop(this.guide1Vertices);
-		mainBody.addLoop(this.guide2Vertices);
-		mainBody.addChain(this.guide3Vertices);
-		mainBody.addChain(this.guide4Vertices);
+		this.pinballBoard.addLoop(this.outlineVertices);
+		this.pinballBoard.addLoop(this.guide1Vertices);
+		this.pinballBoard.addLoop(this.guide2Vertices);
+		this.pinballBoard.addChain(this.guide3Vertices);
+		this.pinballBoard.addChain(this.guide4Vertices);
 
 		// ADDING BOUNCY FIXTURES
-		mainBody.addEdge(this.bouncer1[0], this.bouncer1[1], this.bouncer1[2], this.bouncer1[3]);
-		mainBody.addEdge(this.bouncer2[0], this.bouncer2[1], this.bouncer2[2], this.bouncer2[3]);
+		this.pinballBoard.addEdge(this.bouncer1[0], this.bouncer1[1], this.bouncer1[2], this.bouncer1[3]);
+		this.pinballBoard.addEdge(this.bouncer2[0], this.bouncer2[1], this.bouncer2[2], this.bouncer2[3]);
 
 		// SETTING THE RESTITUTION THAT THE CIRCLES WILL HAVE
 		game.physics.box2d.restitution = 1;
@@ -145,28 +149,28 @@ Pinball.Game.prototype = {
 		// ADDING THE SMALL CIRCLES
 		for(var i = 0; i < this.smallCircles.length / 2; i++)
 			{
-			mainBody.addCircle(0.35 * this.PTM, this.smallCircles[2 * i + 0], this.smallCircles[2 * i + 1]);
+			this.pinballBoard.addCircle(0.35 * this.PTM, this.smallCircles[2 * i + 0], this.smallCircles[2 * i + 1]);
 			}
 
 		// ADDING THE MEDIUM CIRCLES
 		for(var i = 0; i < this.mediumCircles.length / 2; i++)
 			{
-			this.hittingMediumCircles[i] = mainBody.addCircle(1 * this.PTM, this.mediumCircles[2 * i + 0], this.mediumCircles[2 * i + 1]);
+			this.mediumCirclesList[i] = this.pinballBoard.addCircle(1 * this.PTM, this.mediumCircles[2 * i + 0], this.mediumCircles[2 * i + 1]);
 			}
 
 		// ADDING THE LARGE CIRCLES
 		for(var i = 0; i < this.largeCircles.length / 2; i++)
 			{
-			this.hittingLargeCircles[i] = mainBody.addCircle(2.8 * this.PTM, this.largeCircles[2 * i + 0], this.largeCircles[2 * i + 1]);
+			this.largeCirclesList[i] = this.pinballBoard.addCircle(2.8 * this.PTM, this.largeCircles[2 * i + 0], this.largeCircles[2 * i + 1]);
 			}
 
 		// ADDING THE GUTTER FIXTURE
-		gutterFixture = mainBody.addEdge(this.gutterVertices[0], this.gutterVertices[1], this.gutterVertices[2], this.gutterVertices[3]);
+		gutterFixture = this.pinballBoard.addEdge(this.gutterVertices[0], this.gutterVertices[1], this.gutterVertices[2], this.gutterVertices[3]);
 		gutterFixture.SetSensor(true);
 
 		// SETTING THE RESTITUTION FOR LAUNCHER
 		game.physics.box2d.restitution = 2;
-		mainBody.addEdge(this.launcherVertices[0], this.launcherVertices[1], this.launcherVertices[2], this.launcherVertices[3]);
+		this.pinballBoard.addEdge(this.launcherVertices[0], this.launcherVertices[1], this.launcherVertices[2], this.launcherVertices[3]);
 
 		// CREATING THE BALL
 		game.physics.box2d.restitution = 0.1;
@@ -176,35 +180,33 @@ Pinball.Game.prototype = {
 		this.ballBody.bullet = true;
 
 		// SETTING A CALLBACK WHEN HITTING A MEDIUM CIRCLE
-		for(var i = 0; i < this.hittingMediumCircles.length; i++)
+		for(var i = 0; i < this.mediumCirclesList.length; i++)
 			{
-			this.ballBody.setFixtureContactCallback(this.hittingMediumCircles[i], this.hittingMiddle, this);
+			this.ballBody.setFixtureContactCallback(this.mediumCirclesList[i], this.hittingMiddle, this);
 			}
 
 		// SETTING A CALLBACK WHEN HITTING A LARGE CIRCLE
-		for(var i = 0; i < this.hittingLargeCircles.length; i++)
+		for(var i = 0; i < this.largeCirclesList.length; i++)
 			{
-			this.ballBody.setFixtureContactCallback(this.hittingLargeCircles[i], this.hittingLarge, this);
+			this.ballBody.setFixtureContactCallback(this.largeCirclesList[i], this.hittingLarge, this);
 			}
 
-		// FLIPPERS
+		// SETTING THE RESTITUTION FOR THE FLIPPERS
 		game.physics.box2d.restitution = 0.1;
 
-		var leftFlipperBody = new Phaser.Physics.Box2D.Body(this.game, null, -8 * this.PTM, -7.99956 * this.PTM, 2);
-		leftFlipperBody.addPolygon(this.leftFlipperVertices);
+		// ADDING THE LEFT FLIPPER
+		var leftpinballBoard = new Phaser.Physics.Box2D.Body(this.game, null, -8 * this.PTM, -7.99956 * this.PTM, 2);
+		leftpinballBoard.addPolygon(this.leftFlipperVertices);
 
-		var rightFlipperBody = new Phaser.Physics.Box2D.Body(this.game, null, 6.4 * this.PTM, -7.99956 * this.PTM, 2);
-		rightFlipperBody.addPolygon(this.rightFlipperVertices);
+		// ADDING THE RIGHT FLIPPER
+		var rightpinballBoard = new Phaser.Physics.Box2D.Body(this.game, null, 6.4 * this.PTM, -7.99956 * this.PTM, 2);
+		rightpinballBoard.addPolygon(this.rightFlipperVertices);
 
-		// FLIPPER JOINTS
-		var motorSpeed = 2;
-		var motorTorque = 100;
+		// SETTING THE FLIPPER JOINTS							(BODYA, BODYB, AX, AY, BX, BY, MOTORSPEED, MOTORTORQUE, MOTORENABLED, LOWERLIMIT, UPPERLIMIT, LIMITENABLED)
+		this.flipperJoints[0] = game.physics.box2d.revoluteJoint(this.pinballBoard,  leftpinballBoard,  -8 * this.PTM, -7.99956 * this.PTM, 0, 0, 2, 100, true, -25, 25, true);
+		this.flipperJoints[1] = game.physics.box2d.revoluteJoint(this.pinballBoard, rightpinballBoard, 6.4 * this.PTM, -7.99956 * this.PTM, 0, 0, 2, 100, true, -25, 25, true);
 
-		// BODYA, BODYB, AX, AY, BX, BY, MOTORSPEED, MOTORTORQUE, MOTORENABLED, LOWERLIMIT, UPPERLIMIT, LIMITENABLED
-		this.flipperJoints[0] = game.physics.box2d.revoluteJoint(mainBody,  leftFlipperBody,  -8 * this.PTM,-7.99956*this.PTM, 0,0, motorSpeed, motorTorque, true, -25, 25, true);
-		this.flipperJoints[1] = game.physics.box2d.revoluteJoint(mainBody, rightFlipperBody, 6.4 * this.PTM,-7.99956*this.PTM, 0,0, motorSpeed, motorTorque, true, -25, 25, true);
-
-		// CREATING THE SCORE LABEL
+		// ADDING THE SCORE LABEL
 		this.scoreLabel = game.add.text(-155, -515, this.scoreValue, { font: "bold 30px Arial", fill: "#FFF", boundsAlignH: "center", boundsAlignV: "middle" });
 
 		// CHECKING IF IT IS A MOBILE DEVICE
@@ -264,24 +266,22 @@ Pinball.Game.prototype = {
 			this.gameOver = false;
 			}
 
-		var flipperSpeed = 15; // RAD/S
-
 		if(cursors.left.isDown)
 			{
-			this.flipperJoints[0].SetMotorSpeed(-flipperSpeed);
+			this.flipperJoints[0].SetMotorSpeed(-15);
 			}
 			else
 			{
-			this.flipperJoints[0].SetMotorSpeed(flipperSpeed);
+			this.flipperJoints[0].SetMotorSpeed(15);
 			}
 
 		if(cursors.right.isDown)
 			{
-			this.flipperJoints[1].SetMotorSpeed(flipperSpeed);
+			this.flipperJoints[1].SetMotorSpeed(15);
 			}
 			else
 			{
-			this.flipperJoints[1].SetMotorSpeed(-flipperSpeed);
+			this.flipperJoints[1].SetMotorSpeed(-15);
 			}
 		},
 
@@ -297,11 +297,13 @@ Pinball.Game.prototype = {
 
 	hittingMiddle: function()
 		{
+		// ADDING 10 POINTS TO THE SCORE
 		this.updateScore(this.scoreValue + 10);
 		},
 
 	hittingLarge: function()
 		{
+		// ADDING 20 POINTS TO THE SCORE
 		this.updateScore(this.scoreValue + 20);
 		},
 
