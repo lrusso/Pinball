@@ -1,6 +1,8 @@
 # Pinball
 
-Pinball in JavaScript.
+Pinball game developed in JavaScript.
+
+![alt screenshot](https://raw.githubusercontent.com/lrusso/Pinball/master/Pinball.png)
 
 ## Web:
 
