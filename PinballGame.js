@@ -76,7 +76,7 @@ var needReset = false;
 var hittingMediumCircles = [];
 var hittingLargeCircles = [];
 
-var Pinball = {showDebug: false};
+var Pinball = {showDebug: true};
 
 Pinball.Preloader = function () {};
 
@@ -321,7 +321,11 @@ Pinball.Game.prototype = {
 
 	render: function()
 		{
-		game.debug.box2dWorld();
+		// CHECKING IF THE GAME IS RUNNING IN DEBUG MODE
+		if (Pinball.showDebug==true)
+			{
+			game.debug.box2dWorld();
+			}
 		},
 
 	hittingMiddle: function()
