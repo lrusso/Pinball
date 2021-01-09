@@ -79,8 +79,10 @@ Pinball.Game = function(game)
 	this.rightFlipper = null;
 
 	this.cursors = null;
+	this.scoreBackground = null;
 	this.scoreValue = null;
 	this.scoreLabel = null;
+	this.scoreLabelShadow = null;
 	this.ballBody = null;
 	this.gameOver = false;
 	this.flipperJoints = [];
@@ -114,8 +116,10 @@ Pinball.Game.prototype = {
 		this.rightFlipper = null;
 
 		this.cursors = null;
+		this.scoreBackground = null;
 		this.scoreValue = 0;
 		this.scoreLabel = null;
+		this.scoreLabelShadow = 0;
 		this.ballBody = null;
 		this.gameOver = false;
 		this.flipperJoints = [];
@@ -232,8 +236,16 @@ Pinball.Game.prototype = {
 		this.flipperJoints[0] = game.physics.box2d.revoluteJoint(this.pinballBoard, this.leftFlipper,   -8 * this.PTM, -7.99956 * this.PTM, 0, 0, 2, 100, true, -25, 25, true);
 		this.flipperJoints[1] = game.physics.box2d.revoluteJoint(this.pinballBoard, this.rightFlipper, 6.4 * this.PTM, -7.99956 * this.PTM, 0, 0, 2, 100, true, -25, 25, true);
 
+		// ADDING THE SCORE BACKGROUND
+		this.scoreBackground = game.add.graphics();
+		this.scoreBackground.beginFill(0x000000, 0.45);
+		this.scoreBackground.drawRoundedRect(-175, -516.5, 140, 40, 10);
+
+		// ADDING THE SCORE LABEL SHADOW
+		this.scoreLabelShadow = game.add.text(-157, -513, this.scoreValue, { font: "bold 30px Arial", fill: "#000", boundsAlignH: "center", boundsAlignV: "middle" });
+
 		// ADDING THE SCORE LABEL
-		this.scoreLabel = game.add.text(-155, -515, this.scoreValue, { font: "bold 30px Arial", fill: "#FFF", boundsAlignH: "center", boundsAlignV: "middle" });
+		this.scoreLabel = game.add.text(-160, -515, this.scoreValue, { font: "bold 30px Arial", fill: "#FFF", boundsAlignH: "center", boundsAlignV: "middle" });
 
 		// CHECKING IF IT IS A MOBILE DEVICE
 		if (this.isMobileDevice==true)
@@ -328,6 +340,9 @@ Pinball.Game.prototype = {
 
 		// UPDATING THE SCORE WITH THE NEW VALUE
 		this.scoreLabel.setText(newScore);
+
+		// UPDATING THE SCORE SHADOW WITH THE NEW VALUE
+		this.scoreLabelShadow.setText(newScore);
 		},
 
 	onHitGutter: function(body1, body2, fixture1, fixture2, begin)
