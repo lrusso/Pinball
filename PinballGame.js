@@ -263,7 +263,7 @@ Pinball.Game.prototype = {
 		this.leftBounceMask.endFill();
 
 		// ADDING THE LEFT BOUNCE SPRITE
-		this.leftBounceSprite = this.add.sprite(-143, -178, "backgroundImg");
+		this.leftBounceSprite = this.add.sprite(-153, -174, "backgroundImg");
 		this.leftBounceSprite.mask = this.leftBounceMask;
 
 		// ADDING THE LEFT BOUNCE LINE
@@ -292,7 +292,7 @@ Pinball.Game.prototype = {
 		this.rightBounceMask.endFill();
 
 		// ADDING THE RIGHT BOUNCE SPRITE
-		this.rightBounceSprite = this.add.sprite(0, -178, "backgroundImg");
+		this.rightBounceSprite = this.add.sprite(5, -174, "backgroundImg");
 		this.rightBounceSprite.mask = this.rightBounceMask;
 
 		// ADDING THE RIGHT BOUNCE LINE
