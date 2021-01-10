@@ -133,6 +133,7 @@ Pinball.Game = function(game)
 
 	this.highScoreBackground = null;
 	this.highScoreIcon = null;
+	this.highScoreIconShadow = null;
 	this.highScoreLabel = null;
 	this.highScoreLabelShadow = null;
 
@@ -702,7 +703,10 @@ Pinball.Game.prototype = {
 			for(var i=0;i < ca.length;i++)
 				{
 				var c = ca[i];
-				while (c.charAt(0)==" ") c = c.substring(1,c.length);
+				while (c.charAt(0)==" ")
+					{
+					c = c.substring(1,c.length);
+					}
 				if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
 				}
 			}
