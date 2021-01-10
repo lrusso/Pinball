@@ -87,7 +87,7 @@ Pinball.Game = function(game)
 	this.toast = true;
 	this.toastText = null;
 	this.toastShadow = null;
-	this.toastTimeDelay = 3000;
+	this.toastTimeDelay = null;
 	this.toastTimeStamp = null;
 
 	this.outlineVertices = [1440,-3687,1023,-2194,1345,-1961,1345,-663,638,-480,160,-154,150,471,-318,470,-319,-153,-800,-480,-1519,-619,-1518,-1988,-1147,-2175,-1429,-3152,-1500,-3195,-1492,-3399,-1438,-3867,-1309,-4132,-1112,-4351,-787,-4540,-389,-4670,139,-4778,655,-4846,872,-4837,1067,-4792,1236,-4700,1374,-4584,1480,-4440,1557,-4271,1601,-3992,1601,-3712,1600,-171,1442,-169,1440,-3687];
@@ -733,17 +733,41 @@ Pinball.Game.prototype = {
 
 	showCustomToast: function(myText)
 		{
-		// CREATING THE TOAST SHADOW
-		this.toastShadow = game.add.graphics();
-		this.toastShadow.beginFill(0x000000, 0.4);
+		// CHECKING IF IT IS A MOBILE DEVICE
+		if (this.isMobileDevice==true)
+			{
+			// CREATING THE TOAST SHADOW
+			this.toastShadow = game.add.graphics();
+			this.toastShadow.beginFill(0x000000, 0.5);
 
-		// CREATING THE TOAST TEXT
-		this.toastText = game.add.text(0, 0, myText, { font: "bold 20px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" });
-		this.toastText.setShadow(3, 3, "rgba(0,0,0,0.5)", 2);
-		this.toastText.setTextBounds(0, 0, 0, 41);
+			// CREATING THE TOAST TEXT
+			this.toastText = game.add.text(0, 0, myText, { font: "bold 20px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" });
+			this.toastText.setShadow(3, 3, "rgba(0,0,0,0.5)", 2);
+			this.toastText.setTextBounds(0, 0, 0, -150);
 
-		// DRAWING THE TOAST SHADOW
-		this.toastShadow.drawRoundedRect(500 / 2 - this.toastText._width / 2 - 11- 250, -5, this.toastText._width + 23, 46, 10);
+			// DRAWING THE TOAST SHADOW
+			this.toastShadow.drawRoundedRect(500 / 2 - this.toastText._width / 2 - 11- 250, -100, this.toastText._width + 23, 46, 10);
+
+			// SETTING THE DELAY FOR THE ABOUT TOAST
+			this.toastTimeDelay = 2000;
+			}
+		else
+			{
+			// CREATING THE TOAST SHADOW
+			this.toastShadow = game.add.graphics();
+			this.toastShadow.beginFill(0x000000, 0.4);
+
+			// CREATING THE TOAST TEXT
+			this.toastText = game.add.text(0, 0, myText, { font: "bold 20px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" });
+			this.toastText.setShadow(3, 3, "rgba(0,0,0,0.5)", 2);
+			this.toastText.setTextBounds(0, 0, 0, 41);
+
+			// DRAWING THE TOAST SHADOW
+			this.toastShadow.drawRoundedRect(500 / 2 - this.toastText._width / 2 - 11- 250, -5, this.toastText._width + 23, 46, 10);
+
+			// SETTING THE DELAY FOR THE ABOUT TOAST
+			this.toastTimeDelay = 3000;
+			}
 		}
 	};
 
