@@ -324,7 +324,14 @@ Pinball.Game.prototype = {
 		game.physics.box2d.restitution = 0.1;
 		this.ballBody = new Phaser.Physics.Box2D.Body(this.game, null, this.ballStart[0] * this.PTM, this.ballStart[1] * this.PTM);
 		this.ballBody.setCircle(0.64 * this.PTM);
-		this.ballBody.setFixtureContactCallback(gutterFixture, this.onHitGutter, this);
+		this.ballBody.setFixtureContactCallback(gutterFixture, function()
+			{
+			// CLEARING THE SCORE
+			this.updateScore(0);
+
+			// SETTING THAT THE GAME IS OVER
+			this.gameOver = true;
+			}, this);
 		this.ballBody.bullet = true;
 
 		// ADDING THE BALL SPRITE
@@ -519,15 +526,6 @@ Pinball.Game.prototype = {
 
 		// UPDATING THE SCORE SHADOW WITH THE NEW VALUE
 		this.scoreLabelShadow.setText(newScore);
-		},
-
-	onHitGutter: function(body1, body2, fixture1, fixture2, begin)
-		{
-		// CLEARING THE SCORE
-		this.updateScore(0);
-
-		// SETTING THAT THE GAME IS OVER
-		this.gameOver = true;
 		}
 	};
 
