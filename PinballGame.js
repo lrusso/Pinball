@@ -88,7 +88,9 @@ Pinball.Game = function(game)
 	this.leftBorderSprite = null;
 	this.leftBorderLine = null;
 	this.leftFlipper = null;
-	this.leftBounceGraphic = null;
+	this.leftBounceMask = null;
+	this.leftBounceSprite = null;
+	this.leftBounceLine = null;
 	this.rightBorderMask = null;
 	this.rightBorderSprite = null;
 	this.rightBorderLine = null;
@@ -134,7 +136,9 @@ Pinball.Game.prototype = {
 		this.leftBorderSprite = null;
 		this.leftBorderLine = null;
 		this.leftFlipper = null;
-		this.leftBounceGraphic = null;
+		this.leftBounceMask = null;
+		this.leftBounceSprite = null;
+		this.leftBounceLine = null;
 		this.rightBorderMask = null;
 		this.rightBorderSprite = null;
 		this.rightBorderLine = null;
@@ -160,10 +164,10 @@ Pinball.Game.prototype = {
 		this.isMobileDevice = isMobileDevice();
 
 		// SETTING THE GAME BOUNDS
-		game.world.setBounds(-430, -525, 600, 335);
+		game.world.setBounds(-430, -555, 600, 335);
 
 		// ADDING THE BACKGROUND IMAGE
-		this.add.tileSprite(-170, -525, 600, 835, "backgroundImg");
+		this.add.tileSprite(-170, -555, 600, 835, "backgroundImg");
 
 		// DRAWING THE PINBALL BOARD BLACK BACKGROUND
 		this.pinballBoardBlackBackground = game.add.graphics(0, 0);
@@ -237,19 +241,34 @@ Pinball.Game.prototype = {
 			this.rightBorderLine.lineTo(this.guide2Vertices[i] * 0.10, this.guide2Vertices[i +1] * 0.10);
 			}
 
-		// DRAWING THE LEFT BOUNCE GRAPHIC
-		this.leftBounceGraphic = game.add.graphics(0, 0);
-		this.leftBounceGraphic.beginFill(0xFFFF00);
-		this.leftBounceGraphic.lineStyle(2, 0x5a5a5a, 1);
+		// CREATING THE LEFT BOUNCE MASK
+		this.leftBounceMask = game.add.graphics(0, 0);
+		this.leftBounceMask.beginFill(0xFFFFFF);
 		for(var i = 0; i < this.guide3Vertices.length; i=i+2)
 			{
 			if (i==0)
 				{
-				this.leftBounceGraphic.moveTo(this.guide3Vertices[i] * 0.10 - 0.0000001, this.guide3Vertices[i + 1] * 0.10 - 0.0000001);
+				this.leftBounceMask.moveTo(this.guide3Vertices[i] * 0.10 - 0.0000001, this.guide3Vertices[i + 1] * 0.10 - 0.0000001);
 				}
-			this.leftBounceGraphic.lineTo(this.guide3Vertices[i] * 0.10, this.guide3Vertices[i +1] * 0.10);
+			this.leftBounceMask.lineTo(this.guide3Vertices[i] * 0.10, this.guide3Vertices[i +1] * 0.10);
 			}
-		this.leftBounceGraphic.endFill();
+		this.leftBounceMask.endFill();
+
+		// ADDING THE LEFT BOUNCE SPRITE
+		this.leftBounceSprite = this.add.sprite(-143, -178, "backgroundImg");
+		this.leftBounceSprite.mask = this.leftBounceMask;
+
+		// ADDING THE LEFT BOUNCE LINE
+		this.leftBounceLine = game.add.graphics(0, 0);
+		this.leftBounceLine.lineStyle(2, 0x5a5a5a, 1);
+		for(var i = 0; i < this.guide3Vertices.length; i=i+2)
+			{
+			if (i==0)
+				{
+				this.leftBounceLine.moveTo(this.guide3Vertices[i] * 0.10 - 0.0000001, this.guide3Vertices[i + 1] * 0.10 - 0.0000001);
+				}
+			this.leftBounceLine.lineTo(this.guide3Vertices[i] * 0.10, this.guide3Vertices[i +1] * 0.10);
+			}
 
 		// DRAWING THE RIGHT BOUNCE GRAPHIC
 		this.rightBounceGraphic = game.add.graphics(0, 0);
@@ -402,13 +421,13 @@ Pinball.Game.prototype = {
 		// ADDING THE SCORE BACKGROUND
 		this.scoreBackground = game.add.graphics();
 		this.scoreBackground.beginFill(0x000000, 0.7);
-		this.scoreBackground.drawRoundedRect(-175, -516.5, 140, 40, 10);
+		this.scoreBackground.drawRoundedRect(-175, -540, 140, 40, 10);
 
 		// ADDING THE SCORE LABEL SHADOW
-		this.scoreLabelShadow = game.add.text(-157, -512, this.scoreValue, { font: "bold 30px Arial", fill: "#000", boundsAlignH: "center", boundsAlignV: "middle" });
+		this.scoreLabelShadow = game.add.text(-157, -535, this.scoreValue, { font: "bold 30px Arial", fill: "#000", boundsAlignH: "center", boundsAlignV: "middle" });
 
 		// ADDING THE SCORE LABEL
-		this.scoreLabel = game.add.text(-160, -514, this.scoreValue, { font: "bold 30px Arial", fill: "#FFF", boundsAlignH: "center", boundsAlignV: "middle" });
+		this.scoreLabel = game.add.text(-160, -537, this.scoreValue, { font: "bold 30px Arial", fill: "#FFF", boundsAlignH: "center", boundsAlignV: "middle" });
 
 		// CHECKING IF IT IS A MOBILE DEVICE
 		if (this.isMobileDevice==true)
