@@ -69,12 +69,10 @@ Pinball.Game = function(game)
 	this.launcherVertices = [1401,-1054,1631,-1054];
 	this.guide1Vertices = [-825,-746,-771,-853,-1280,-1120,-1280,-1759,-1360,-1759,-1360,-959];
 	this.guide2Vertices = [663,-743,614,-855,1119,-1121,1123,-1760,1200,-1759,1200,-959];
-	this.guide3Vertices = [-1116,-1753,-1118,-1277,-838,-1110];
-	this.guide4Vertices = [671,-1110,956,-1282,956,-1762];
+	this.guide3Vertices = [-1116,-1753,-1118,-1277,-838,-1110,-1116,-1753];
+	this.guide4Vertices = [671,-1110,956,-1282,956,-1762,671,-1110];
 	this.gutterVertices = [-480,413,293,413];
-	this.bouncer1 = [-1042,-1763,-826,-1100];
-	this.bouncer2 = [883,-1767,669,-1100];
-	this.smallCircles = [-1320,-1759,-1078,-1753,918,-1760,1160,-1759];
+	this.smallCircles = [-1320,-1759,-1100,-1753,950,-1760,1160,-1759];
 	this.mediumCircles = [-1500,-3132,-866,-3163,-290,-3074,187,-3415,614,-3074,-451,-2232,396,-2242];
 	this.largeCircles = [-446,-3704,309,-4133,990,-3750];
 	this.leftFlipperVertices = [560,32,560,-32,0,-64,0,64];
@@ -179,10 +177,6 @@ Pinball.Game.prototype = {
 		this.pinballBoard.addLoop(this.guide2Vertices);
 		this.pinballBoard.addChain(this.guide3Vertices);
 		this.pinballBoard.addChain(this.guide4Vertices);
-
-		// ADDING BOUNCY FIXTURES
-		this.pinballBoard.addEdge(this.bouncer1[0], this.bouncer1[1], this.bouncer1[2], this.bouncer1[3]);
-		this.pinballBoard.addEdge(this.bouncer2[0], this.bouncer2[1], this.bouncer2[2], this.bouncer2[3]);
 
 		// SETTING THE RESTITUTION THAT THE CIRCLES WILL HAVE
 		game.physics.box2d.restitution = 1;
