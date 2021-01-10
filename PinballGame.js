@@ -83,7 +83,9 @@ Pinball.Game = function(game)
 	this.pinballBoard = null;
 	this.pinballBoardBlackBackground = null;
 	this.leftFlipper = null;
+	this.leftFlipperGraphic = null;
 	this.rightFlipper = null;
+	this.rightFlipperGraphic = null;
 
 	this.cursors = null;
 	this.scoreBackground = null;
@@ -121,7 +123,9 @@ Pinball.Game.prototype = {
 		this.pinballBoard = null;
 		this.pinballBoardBlackBackground = null;
 		this.leftFlipper = null;
+		this.leftFlipperGraphic = null;
 		this.rightFlipper = null;
+		this.rightFlipperGraphic = null;
 
 		this.cursors = null;
 		this.scoreBackground = null;
@@ -138,6 +142,12 @@ Pinball.Game.prototype = {
 
 	create: function()
 		{
+		// CHECKING IS THE GAME IS RUNNING IN A MOBILE DEVICE
+		this.isMobileDevice = isMobileDevice();
+
+		// SETTING THE GAME BOUNDS
+		game.world.setBounds(-430, -525, 600, 335);
+
 		// ADDING THE BACKGROUND IMAGE
 		this.add.tileSprite(-170, -525, 600, 835, "backgroundImg");
 
@@ -155,11 +165,33 @@ Pinball.Game.prototype = {
 			}
 		this.pinballBoardBlackBackground.endFill();
 
-		// CHECKING IS THE GAME IS RUNNING IN A MOBILE DEVICE
-		this.isMobileDevice = isMobileDevice();
+		// DRAWING THE LEFT FLIPPER GRAPHIC
+		this.leftFlipperGraphic = game.add.graphics(0, 0);
+		this.leftFlipperGraphic.beginFill(0xFFFF00);
+		this.leftFlipperGraphic.lineStyle(2, 0x5a5a5a, 1);
+		for(var i = 0; i < this.guide3Vertices.length; i=i+2)
+			{
+			if (i==0)
+				{
+				this.leftFlipperGraphic.moveTo(this.guide3Vertices[i] * 0.10 - 0.0000001, this.guide3Vertices[i + 1] * 0.10 - 0.0000001);
+				}
+			this.leftFlipperGraphic.lineTo(this.guide3Vertices[i] * 0.10, this.guide3Vertices[i +1] * 0.10);
+			}
+		this.leftFlipperGraphic.endFill();
 
-		// SETTING THE GAME BOUNDS
-		game.world.setBounds(-430, -525, 600, 335);
+		// DRAWING THE RIGHT FLIPPER GRAPHIC
+		this.rightFlipperGraphic = game.add.graphics(0, 0);
+		this.rightFlipperGraphic.beginFill(0xFFFF00);
+		this.rightFlipperGraphic.lineStyle(2, 0x5a5a5a, 1);
+		for(var i = 0; i < this.guide4Vertices.length; i=i+2)
+			{
+			if (i==0)
+				{
+				this.rightFlipperGraphic.moveTo(this.guide4Vertices[i] * 0.10 - 0.0000001, this.guide4Vertices[i + 1] * 0.10 - 0.0000001);
+				}
+			this.rightFlipperGraphic.lineTo(this.guide4Vertices[i] * 0.10, this.guide4Vertices[i +1] * 0.10);
+			}
+		this.rightFlipperGraphic.endFill();
 
 		// ENABLING THE BOX2D PHYSICS
 		game.physics.startSystem(Phaser.Physics.BOX2D);
@@ -291,10 +323,10 @@ Pinball.Game.prototype = {
 		this.scoreBackground.drawRoundedRect(-175, -516.5, 140, 40, 10);
 
 		// ADDING THE SCORE LABEL SHADOW
-		this.scoreLabelShadow = game.add.text(-157, -513, this.scoreValue, { font: "bold 30px Arial", fill: "#000", boundsAlignH: "center", boundsAlignV: "middle" });
+		this.scoreLabelShadow = game.add.text(-157, -512, this.scoreValue, { font: "bold 30px Arial", fill: "#000", boundsAlignH: "center", boundsAlignV: "middle" });
 
 		// ADDING THE SCORE LABEL
-		this.scoreLabel = game.add.text(-160, -515, this.scoreValue, { font: "bold 30px Arial", fill: "#FFF", boundsAlignH: "center", boundsAlignV: "middle" });
+		this.scoreLabel = game.add.text(-160, -514, this.scoreValue, { font: "bold 30px Arial", fill: "#FFF", boundsAlignH: "center", boundsAlignV: "middle" });
 
 		// CHECKING IF IT IS A MOBILE DEVICE
 		if (this.isMobileDevice==true)
