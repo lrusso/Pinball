@@ -393,6 +393,10 @@ Pinball.Game.prototype = {
 			// ADDING THE CIRCLE TO THE MEDIUM CIRCLE LIST
 			this.mediumCirclesList[i] = this.pinballBoard.addCircle(1 * this.PTM, this.mediumCircles[2 * i + 0], this.mediumCircles[2 * i + 1]);
 
+			// ADDING THE MEDIUM CIRCLE SHADOW
+			var tempCircleShadow = this.add.sprite(this.mediumCircles[2 * i + 0] * 0.10 - 11.75 + 1,this.mediumCircles[2 * i + 1] * 0.10 - 11.75 + 1, "mediumCircleImg");
+			tempCircleShadow.tint = 0x343434;
+
 			// ADDING THE MEDIUM CIRCLE SPRITE
 			this.add.sprite(this.mediumCircles[2 * i + 0] * 0.10 - 11.75,this.mediumCircles[2 * i + 1] * 0.10 - 11.75, "mediumCircleImg");
 			}
@@ -402,6 +406,10 @@ Pinball.Game.prototype = {
 			{
 			// ADDING THE CIRCLE TO THE LARGE CIRCLE LIST
 			this.largeCirclesList[i] = this.pinballBoard.addCircle(2.8 * this.PTM, this.largeCircles[2 * i + 0], this.largeCircles[2 * i + 1]);
+
+			// ADDING THE LARGE CIRCLE SHADOW
+			var tempCircleShadow = this.add.sprite(this.largeCircles[2 * i + 0] * 0.10 - 26.45 + 1,this.largeCircles[2 * i + 1] * 0.10 - 26.45 + 1,"largeCircleImg");
+			tempCircleShadow.tint = 0x343434;
 
 			// ADDING THE LARGE CIRCLE SPRITE
 			this.add.sprite(this.largeCircles[2 * i + 0] * 0.10 - 26.45,this.largeCircles[2 * i + 1] * 0.10 - 26.45,"largeCircleImg");
@@ -513,7 +521,7 @@ Pinball.Game.prototype = {
 
 		// ADDING THE HIGH SCORE ICON SHADOW
 		this.highScoreIconShadow = game.add.sprite(49, -530, "highScoreImg");
-		this.highScoreIconShadow.tint = 0x00000;
+		this.highScoreIconShadow.tint = 0x000000;
 
 		// ADDING THE HIGH SCORE ICON
 		this.highScoreIcon = game.add.sprite(47, -532, "highScoreImg");
