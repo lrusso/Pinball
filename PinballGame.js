@@ -381,6 +381,10 @@ Pinball.Game.prototype = {
 
 		// GETTING THE CURSOR KEY INPUTS
 		this.cursors = game.input.keyboard.createCursorKeys();
+
+		// REGISTERING THE 'A' AND 'D' KEYS
+		this.keyA = game.input.keyboard.addKey(Phaser.Keyboard.A);
+		this.keyD = game.input.keyboard.addKey(Phaser.Keyboard.D);
 		},
 
 	update: function()
@@ -411,21 +415,27 @@ Pinball.Game.prototype = {
 		// THE RIGHT FLIPPER SPRITE MUST ALWAYS FOLLOW THE BOX2D RIGHT FLIPPER
 		this.rightFlipperSprite.angle = this.rightFlipper.angle;
 
-		if(this.cursors.left.isDown)
+		// CHECKING IF PRESSING THE LEFT OR 'A' KEY
+		if(this.cursors.left.isDown || this.keyA.isDown)
 			{
+			// RAISING THE LEFT FLIPPER
 			this.flipperJoints[0].SetMotorSpeed(-15);
 			}
 			else
 			{
+			// LOWERING THE LEFT FLIPPER
 			this.flipperJoints[0].SetMotorSpeed(15);
 			}
 
-		if(this.cursors.right.isDown)
+		// CHECKING IF PRESSING THE RIGHT OR 'D' KEY
+		if(this.cursors.right.isDown || this.keyD.isDown)
 			{
+			// RAISING THE RIGHT FLIPPER
 			this.flipperJoints[1].SetMotorSpeed(15);
 			}
 			else
 			{
+			// LOWERING THE RIGHT FLIPPER
 			this.flipperJoints[1].SetMotorSpeed(-15);
 			}
 		},
