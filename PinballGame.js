@@ -349,7 +349,7 @@ Pinball.Game.prototype = {
 		// ADDING THE LEFT FLIPPER SPRITE
 		this.leftFlipperSprite = game.add.graphics(0, 0);
 		this.leftFlipperSprite.beginFill(0xFFFFFF);
-		this.leftFlipperSprite.lineStyle(1, 0xA0A0A0, 1);
+		this.leftFlipperSprite.lineStyle(2, 0x5a5a5a, 1);
 		for(var i = 0; i < this.leftFlipperVertices.length; i=i+2)
 			{
 			if (i==0)
@@ -369,7 +369,7 @@ Pinball.Game.prototype = {
 		// ADDING THE RIGHT FLIPPER SPRITE
 		this.rightFlipperSprite = game.add.graphics(0, 0);
 		this.rightFlipperSprite.beginFill(0xFFFFFF);
-		this.rightFlipperSprite.lineStyle(1, 0xA0A0A0, 1);
+		this.rightFlipperSprite.lineStyle(2, 0x5a5a5a, 1);
 		for(var i = 0; i < this.rightFlipperVertices.length; i=i+2)
 			{
 			if (i==0)
