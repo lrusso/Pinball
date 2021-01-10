@@ -84,6 +84,7 @@ Pinball.Game = function(game)
 
 	this.pinballBoard = null;
 	this.pinballBoardBlackBackground = null;
+
 	this.leftBorderMask = null;
 	this.leftBorderSprite = null;
 	this.leftBorderLine = null;
@@ -91,11 +92,14 @@ Pinball.Game = function(game)
 	this.leftBounceMask = null;
 	this.leftBounceSprite = null;
 	this.leftBounceLine = null;
+
 	this.rightBorderMask = null;
 	this.rightBorderSprite = null;
 	this.rightBorderLine = null;
 	this.rightFlipper = null;
-	this.rightBounceGraphic = null;
+	this.rightBounceMask = null;
+	this.rightBounceSprite = null;
+	this.rightBounceLine = null;
 
 	this.cursors = null;
 	this.scoreBackground = null;
@@ -132,6 +136,7 @@ Pinball.Game.prototype = {
 		{
 		this.pinballBoard = null;
 		this.pinballBoardBlackBackground = null;
+
 		this.leftBorderMask = null;
 		this.leftBorderSprite = null;
 		this.leftBorderLine = null;
@@ -139,11 +144,14 @@ Pinball.Game.prototype = {
 		this.leftBounceMask = null;
 		this.leftBounceSprite = null;
 		this.leftBounceLine = null;
+
 		this.rightBorderMask = null;
 		this.rightBorderSprite = null;
 		this.rightBorderLine = null;
 		this.rightFlipper = null;
-		this.rightBounceGraphic = null;
+		this.rightBounceMask = null;
+		this.rightBounceSprite = null;
+		this.rightBounceLine = null;
 
 		this.cursors = null;
 		this.scoreBackground = null;
@@ -270,19 +278,34 @@ Pinball.Game.prototype = {
 			this.leftBounceLine.lineTo(this.guide3Vertices[i] * 0.10, this.guide3Vertices[i +1] * 0.10);
 			}
 
-		// DRAWING THE RIGHT BOUNCE GRAPHIC
-		this.rightBounceGraphic = game.add.graphics(0, 0);
-		this.rightBounceGraphic.beginFill(0xFFFF00);
-		this.rightBounceGraphic.lineStyle(2, 0x5a5a5a, 1);
+		// CREATING THE RIGHT BOUNCE MASK
+		this.rightBounceMask = game.add.graphics(0, 0);
+		this.rightBounceMask.beginFill(0xFFFFFF);
 		for(var i = 0; i < this.guide4Vertices.length; i=i+2)
 			{
 			if (i==0)
 				{
-				this.rightBounceGraphic.moveTo(this.guide4Vertices[i] * 0.10 - 0.0000001, this.guide4Vertices[i + 1] * 0.10 - 0.0000001);
+				this.rightBounceMask.moveTo(this.guide4Vertices[i] * 0.10 - 0.0000001, this.guide4Vertices[i + 1] * 0.10 - 0.0000001);
 				}
-			this.rightBounceGraphic.lineTo(this.guide4Vertices[i] * 0.10, this.guide4Vertices[i +1] * 0.10);
+			this.rightBounceMask.lineTo(this.guide4Vertices[i] * 0.10, this.guide4Vertices[i +1] * 0.10);
 			}
-		this.rightBounceGraphic.endFill();
+		this.rightBounceMask.endFill();
+
+		// ADDING THE RIGHT BOUNCE SPRITE
+		this.rightBounceSprite = this.add.sprite(0, -178, "backgroundImg");
+		this.rightBounceSprite.mask = this.rightBounceMask;
+
+		// ADDING THE RIGHT BOUNCE LINE
+		this.rightBounceLine = game.add.graphics(0, 0);
+		this.rightBounceLine.lineStyle(2, 0x5a5a5a, 1);
+		for(var i = 0; i < this.guide4Vertices.length; i=i+2)
+			{
+			if (i==0)
+				{
+				this.rightBounceLine.moveTo(this.guide4Vertices[i] * 0.10 - 0.0000001, this.guide4Vertices[i + 1] * 0.10 - 0.0000001);
+				}
+			this.rightBounceLine.lineTo(this.guide4Vertices[i] * 0.10, this.guide4Vertices[i +1] * 0.10);
+			}
 
 		// ENABLING THE BOX2D PHYSICS
 		game.physics.startSystem(Phaser.Physics.BOX2D);
