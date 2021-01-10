@@ -88,12 +88,12 @@ Pinball.Game = function(game)
 	this.leftBorderSprite = null;
 	this.leftBorderLine = null;
 	this.leftFlipper = null;
-	this.leftFlipperGraphic = null;
+	this.leftBounceGraphic = null;
 	this.rightBorderMask = null;
 	this.rightBorderSprite = null;
 	this.rightBorderLine = null;
 	this.rightFlipper = null;
-	this.rightFlipperGraphic = null;
+	this.rightBounceGraphic = null;
 
 	this.cursors = null;
 	this.scoreBackground = null;
@@ -134,12 +134,12 @@ Pinball.Game.prototype = {
 		this.leftBorderSprite = null;
 		this.leftBorderLine = null;
 		this.leftFlipper = null;
-		this.leftFlipperGraphic = null;
+		this.leftBounceGraphic = null;
 		this.rightBorderMask = null;
 		this.rightBorderSprite = null;
 		this.rightBorderLine = null;
 		this.rightFlipper = null;
-		this.rightFlipperGraphic = null;
+		this.rightBounceGraphic = null;
 
 		this.cursors = null;
 		this.scoreBackground = null;
@@ -237,33 +237,33 @@ Pinball.Game.prototype = {
 			this.rightBorderLine.lineTo(this.guide2Vertices[i] * 0.10, this.guide2Vertices[i +1] * 0.10);
 			}
 
-		// DRAWING THE LEFT FLIPPER GRAPHIC
-		this.leftFlipperGraphic = game.add.graphics(0, 0);
-		this.leftFlipperGraphic.beginFill(0xFFFF00);
-		this.leftFlipperGraphic.lineStyle(2, 0x5a5a5a, 1);
+		// DRAWING THE LEFT BOUNCE GRAPHIC
+		this.leftBounceGraphic = game.add.graphics(0, 0);
+		this.leftBounceGraphic.beginFill(0xFFFF00);
+		this.leftBounceGraphic.lineStyle(2, 0x5a5a5a, 1);
 		for(var i = 0; i < this.guide3Vertices.length; i=i+2)
 			{
 			if (i==0)
 				{
-				this.leftFlipperGraphic.moveTo(this.guide3Vertices[i] * 0.10 - 0.0000001, this.guide3Vertices[i + 1] * 0.10 - 0.0000001);
+				this.leftBounceGraphic.moveTo(this.guide3Vertices[i] * 0.10 - 0.0000001, this.guide3Vertices[i + 1] * 0.10 - 0.0000001);
 				}
-			this.leftFlipperGraphic.lineTo(this.guide3Vertices[i] * 0.10, this.guide3Vertices[i +1] * 0.10);
+			this.leftBounceGraphic.lineTo(this.guide3Vertices[i] * 0.10, this.guide3Vertices[i +1] * 0.10);
 			}
-		this.leftFlipperGraphic.endFill();
+		this.leftBounceGraphic.endFill();
 
-		// DRAWING THE RIGHT FLIPPER GRAPHIC
-		this.rightFlipperGraphic = game.add.graphics(0, 0);
-		this.rightFlipperGraphic.beginFill(0xFFFF00);
-		this.rightFlipperGraphic.lineStyle(2, 0x5a5a5a, 1);
+		// DRAWING THE RIGHT BOUNCE GRAPHIC
+		this.rightBounceGraphic = game.add.graphics(0, 0);
+		this.rightBounceGraphic.beginFill(0xFFFF00);
+		this.rightBounceGraphic.lineStyle(2, 0x5a5a5a, 1);
 		for(var i = 0; i < this.guide4Vertices.length; i=i+2)
 			{
 			if (i==0)
 				{
-				this.rightFlipperGraphic.moveTo(this.guide4Vertices[i] * 0.10 - 0.0000001, this.guide4Vertices[i + 1] * 0.10 - 0.0000001);
+				this.rightBounceGraphic.moveTo(this.guide4Vertices[i] * 0.10 - 0.0000001, this.guide4Vertices[i + 1] * 0.10 - 0.0000001);
 				}
-			this.rightFlipperGraphic.lineTo(this.guide4Vertices[i] * 0.10, this.guide4Vertices[i +1] * 0.10);
+			this.rightBounceGraphic.lineTo(this.guide4Vertices[i] * 0.10, this.guide4Vertices[i +1] * 0.10);
 			}
-		this.rightFlipperGraphic.endFill();
+		this.rightBounceGraphic.endFill();
 
 		// ENABLING THE BOX2D PHYSICS
 		game.physics.startSystem(Phaser.Physics.BOX2D);
@@ -288,12 +288,14 @@ Pinball.Game.prototype = {
 		// ADDING THE SMALL CIRCLES
 		for(var i = 0; i < this.smallCircles.length / 2; i++)
 			{
+			// ADDING THE SMALL CIRCLE
 			this.pinballBoard.addCircle(0.35 * this.PTM, this.smallCircles[2 * i + 0], this.smallCircles[2 * i + 1]);
 			}
 
 		// ADDING THE MEDIUM CIRCLES
 		for(var i = 0; i < this.mediumCircles.length / 2; i++)
 			{
+			// ADDING THE CIRCLE TO THE MEDIUM CIRCLE LIST
 			this.mediumCirclesList[i] = this.pinballBoard.addCircle(1 * this.PTM, this.mediumCircles[2 * i + 0], this.mediumCircles[2 * i + 1]);
 
 			// ADDING THE MEDIUM CIRCLE SPRITE
@@ -303,6 +305,7 @@ Pinball.Game.prototype = {
 		// ADDING THE LARGE CIRCLES
 		for(var i = 0; i < this.largeCircles.length / 2; i++)
 			{
+			// ADDING THE CIRCLE TO THE LARGE CIRCLE LIST
 			this.largeCirclesList[i] = this.pinballBoard.addCircle(2.8 * this.PTM, this.largeCircles[2 * i + 0], this.largeCircles[2 * i + 1]);
 
 			// ADDING THE LARGE CIRCLE SPRITE
