@@ -222,7 +222,7 @@ Pinball.Game.prototype = {
 		this.rightBorderMask.endFill();
 
 		// ADDING THE RIGHT BORDER SPRITE
-		this.rightBorderSprite = this.add.sprite(0, -178, "backgroundImg");
+		this.rightBorderSprite = this.add.sprite(-3, -179, "backgroundImg");
 		this.rightBorderSprite.mask = this.rightBorderMask;
 
 		// ADDING THE RIGHT BORDER LINE
