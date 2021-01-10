@@ -191,6 +191,7 @@ Pinball.Game.prototype = {
 
 		this.highScoreBackground = null;
 		this.highScoreIcon = null;
+		this.highScoreIconShadow = null;
 		this.highScoreLabel = null;
 		this.highScoreLabelShadow = null;
 
@@ -509,6 +510,10 @@ Pinball.Game.prototype = {
 		this.highScoreBackground.beginFill(0x022c5c, 1);
 		this.highScoreBackground.lineStyle(2, 0x0046a9, 1);
 		this.highScoreBackground.drawRoundedRect(40, -540, 140, 40, 10);
+
+		// ADDING THE HIGH SCORE ICON SHADOW
+		this.highScoreIconShadow = game.add.sprite(49, -530, "highScoreImg");
+		this.highScoreIconShadow.tint = 0x00000;
 
 		// ADDING THE HIGH SCORE ICON
 		this.highScoreIcon = game.add.sprite(47, -532, "highScoreImg");
