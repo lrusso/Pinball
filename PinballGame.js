@@ -198,7 +198,7 @@ Pinball.Game.prototype = {
 
 		// ADDING THE PINBALL BOARD BACKGROUND LINE
 		this.pinballBoardLine = game.add.graphics(0, 0);
-		this.pinballBoardLine.lineStyle(2, 0x5a5a5a, 1);
+		this.pinballBoardLine.lineStyle(2, 0x343434, 1);
 		for(var i = 0; i < this.outlineVertices.length; i=i+2)
 			{
 			if (i==0)
@@ -228,7 +228,7 @@ Pinball.Game.prototype = {
 
 		// ADDING THE LEFT BORDER LINE
 		this.leftBorderLine = game.add.graphics(0, 0);
-		this.leftBorderLine.lineStyle(2, 0x5a5a5a, 1);
+		this.leftBorderLine.lineStyle(2, 0x343434, 1);
 		for(var i = 0; i < this.guide1Vertices.length; i=i+2)
 			{
 			if (i==0)
@@ -257,7 +257,7 @@ Pinball.Game.prototype = {
 
 		// ADDING THE RIGHT BORDER LINE
 		this.rightBorderLine = game.add.graphics(0, 0);
-		this.rightBorderLine.lineStyle(2, 0x5a5a5a, 1);
+		this.rightBorderLine.lineStyle(2, 0x343434, 1);
 		for(var i = 0; i < this.guide2Vertices.length; i=i+2)
 			{
 			if (i==0)
@@ -286,7 +286,7 @@ Pinball.Game.prototype = {
 
 		// ADDING THE LEFT BOUNCE LINE
 		this.leftBounceLine = game.add.graphics(0, 0);
-		this.leftBounceLine.lineStyle(2, 0x5a5a5a, 1);
+		this.leftBounceLine.lineStyle(2, 0x343434, 1);
 		for(var i = 0; i < this.guide3Vertices.length; i=i+2)
 			{
 			if (i==0)
@@ -315,7 +315,7 @@ Pinball.Game.prototype = {
 
 		// ADDING THE RIGHT BOUNCE LINE
 		this.rightBounceLine = game.add.graphics(0, 0);
-		this.rightBounceLine.lineStyle(2, 0x5a5a5a, 1);
+		this.rightBounceLine.lineStyle(2, 0x343434, 1);
 		for(var i = 0; i < this.guide4Vertices.length; i=i+2)
 			{
 			if (i==0)
@@ -419,7 +419,7 @@ Pinball.Game.prototype = {
 		// ADDING THE LEFT FLIPPER SPRITE
 		this.leftFlipperSprite = game.add.graphics(0, 0);
 		this.leftFlipperSprite.beginFill(0xFFFFFF);
-		this.leftFlipperSprite.lineStyle(2, 0x5a5a5a, 1);
+		this.leftFlipperSprite.lineStyle(2, 0x343434, 1);
 		for(var i = 0; i < this.leftFlipperVertices.length; i=i+2)
 			{
 			if (i==0)
@@ -439,7 +439,7 @@ Pinball.Game.prototype = {
 		// ADDING THE RIGHT FLIPPER SPRITE
 		this.rightFlipperSprite = game.add.graphics(0, 0);
 		this.rightFlipperSprite.beginFill(0xFFFFFF);
-		this.rightFlipperSprite.lineStyle(2, 0x5a5a5a, 1);
+		this.rightFlipperSprite.lineStyle(2, 0x343434, 1);
 		for(var i = 0; i < this.rightFlipperVertices.length; i=i+2)
 			{
 			if (i==0)
