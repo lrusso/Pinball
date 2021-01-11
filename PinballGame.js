@@ -36,7 +36,7 @@ Pinball.Preloader.prototype = {
 		// SETTING THE MAXPOINTERS VALUE
 		this.input.maxPointers = 2;
 
-		// SETTING THE ROUNDPIXELS PROPERTY TO FALSE (IMPORTANT, DO NOT MODIFY)
+		// SETTING THE ROUNDPIXELS PROPERTY TO TRUE (IMPORTANT, DO NOT MODIFY)
 		this.game.renderer.renderSession.roundPixels = true;
 
 		// SCALING THE CANVAS SIZE FOR THE GAME
