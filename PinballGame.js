@@ -755,7 +755,7 @@ Pinball.Game.prototype = {
 			// CREATING THE TOAST TEXT
 			this.toastText = game.add.text(0, 0, myText, { font: "bold 20px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" });
 			this.toastText.setShadow(3, 3, "rgba(0,0,0,0.5)", 2);
-			this.toastText.setTextBounds(0, 0, 0, -150);
+			this.toastText.setTextBounds(0, 0, 0, -149);
 
 			// DRAWING THE TOAST SHADOW
 			this.toastShadow.drawRoundedRect(500 / 2 - this.toastText._width / 2 - 11- 250, -100, this.toastText._width + 23, 46, 10);
