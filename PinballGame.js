@@ -397,6 +397,7 @@ Pinball.Game.prototype = {
 			// ADDING THE MEDIUM CIRCLE SHADOW
 			var tempCircleShadow = this.add.sprite(this.mediumCircles[2 * i + 0] * 0.10 - 11.75 + 1,this.mediumCircles[2 * i + 1] * 0.10 - 11.75 + 1, "mediumCircleImg");
 			tempCircleShadow.tint = 0x343434;
+			tempCircleShadow.alpha = 0.8;
 
 			// ADDING THE MEDIUM CIRCLE SPRITE
 			this.add.sprite(this.mediumCircles[2 * i + 0] * 0.10 - 11.75,this.mediumCircles[2 * i + 1] * 0.10 - 11.75, "mediumCircleImg");
