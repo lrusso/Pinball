@@ -518,20 +518,20 @@ Pinball.Game.prototype = {
 		this.highScoreBackground = game.add.graphics();
 		this.highScoreBackground.beginFill(0x022c5c, 1);
 		this.highScoreBackground.lineStyle(2, 0x0046a9, 1);
-		this.highScoreBackground.drawRoundedRect(40, -540, 140, 40, 10);
+		this.highScoreBackground.drawRoundedRect(50, -540, 140, 40, 10);
 
 		// ADDING THE HIGH SCORE ICON SHADOW
-		this.highScoreIconShadow = game.add.sprite(49, -530, "highScoreImg");
+		this.highScoreIconShadow = game.add.sprite(59, -530, "highScoreImg");
 		this.highScoreIconShadow.tint = 0x000000;
 
 		// ADDING THE HIGH SCORE ICON
-		this.highScoreIcon = game.add.sprite(47, -532, "highScoreImg");
+		this.highScoreIcon = game.add.sprite(57, -532, "highScoreImg");
 
 		// ADDING THE SCORE LABEL SHADOW
-		this.highScoreLabelShadow = game.add.text(80, -535, this.getHighscore(), { font: "bold 30px Arial", fill: "#000", boundsAlignH: "center", boundsAlignV: "middle" });
+		this.highScoreLabelShadow = game.add.text(92, -535, this.getHighscore(), { font: "bold 30px Arial", fill: "#000", boundsAlignH: "center", boundsAlignV: "middle" });
 
 		// ADDING THE SCORE LABEL
-		this.highScoreLabel = game.add.text(77, -537, this.getHighscore(), { font: "bold 30px Arial", fill: "#FFF", boundsAlignH: "center", boundsAlignV: "middle" });
+		this.highScoreLabel = game.add.text(89, -537, this.getHighscore(), { font: "bold 30px Arial", fill: "#FFF", boundsAlignH: "center", boundsAlignV: "middle" });
 
 		// CHECKING IF IT IS A MOBILE DEVICE
 		if (this.isMobileDevice==true)
