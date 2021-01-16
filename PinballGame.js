@@ -111,8 +111,8 @@ Pinball.Game = function(game)
 	this.gutterFixture = null;
 	this.launcherSprite = null;
 	this.launcherFixture = null;
+	this.launcherIsMoving = null;
 	this.launcherGoingUp = null;
-	this.launcherResizing = null;
 	this.launcherContainer = null;
 	this.launcherContainerMask = null;
 
@@ -183,8 +183,8 @@ Pinball.Game.prototype = {
 		this.gutterFixture = null;
 		this.launcherSprite = null;
 		this.launcherFixture = null;
+		this.launcherIsMoving = false;
 		this.launcherGoingUp = null;
-		this.launcherResizing = false;
 		this.launcherContainer = null;
 		this.launcherContainerMask = null;
 
@@ -500,8 +500,8 @@ Pinball.Game.prototype = {
 		// SETTING A CALLBACK WHEN THE BALL HITS THE LAUNCHER
 		this.ballBody.setFixtureContactCallback(this.launcherFixture, function()
 			{
-			// SETTING THAT THE LAUNCHER WILL BE RESIZING
-			this.launcherResizing = true;
+			// SETTING THAT THE LAUNCHER WILL BE MOVING
+			this.launcherIsMoving = true;
 
 			// SETTING THAT THE LAUNCHER WILL BE GOING UP
 			this.launcherGoingUp = true;
@@ -769,25 +769,32 @@ Pinball.Game.prototype = {
 				}
 			}
 
-		// CHECKING IF THE LAUNCHER ANIMATION IS IN PROGRESS
-		if (this.launcherResizing==true)
+		// CHECKING IF THE LAUNCHER IS MOVING
+		if (this.launcherIsMoving==true)
 			{
+			// CHECKING IF THE LAUNCHER IS GOING UP
 			if (this.launcherGoingUp==true)
 				{
+				// MOVING UP THE LAUNCHER
 				this.launcherSprite.position.y = this.launcherSprite.position.y - 10;
 				}
 				else
 				{
+				// MOVING DOWN THE LAUNCHER
 				this.launcherSprite.position.y = this.launcherSprite.position.y + 10;
 				}
 
+			// CHECKING IF THE LAUNCHER HITS THE TOP LIMIT
 			if (this.launcherSprite.position.y<=-160)
 				{
+				// SETTING THAT THE LAUNCHER WILL BE GOING DOWN
 				this.launcherGoingUp = false;
 				}
+			// CHECKING IF THE LAUNCHER HITS THE BOTTOM LIMIT
 			else if (this.launcherSprite.position.y>=-100)
 				{
-				this.launcherResizing = false;
+				// SETTING THAT THE LAUNCHER WILL NOT BE MOVING ANY MORE
+				this.launcherIsMoving = false;
 				}
 			}
 		},
