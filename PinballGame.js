@@ -506,18 +506,19 @@ Pinball.Game.prototype = {
 		// ADDING THE SCORE BACKGROUND
 		this.scoreBackground = game.add.graphics();
 		this.scoreBackground.beginFill(0x000000, 0.7);
-		this.scoreBackground.drawRoundedRect(-175, -540, 140.5, 40.5, 10);
+		this.scoreBackground.lineStyle(2, 0x525252, 1);
+		this.scoreBackground.drawRoundedRect(-200, -540, 140, 40, 10);
 
 		// ADDING THE SCORE LABEL SHADOW
 		this.scoreLabelShadow = game.add.text(-157, -535, this.scoreValue, { font: "bold 30px Arial", fill: "#000", boundsAlignH: "center", boundsAlignV: "middle" });
 
 		// ADDING THE SCORE LABEL
-		this.scoreLabel = game.add.text(-160, -537, this.scoreValue, { font: "bold 30px Arial", fill: "#FFF", boundsAlignH: "center", boundsAlignV: "middle" });
+		this.scoreLabel = game.add.text(-160, -537, "0000", { font: "bold 30px Arial", fill: "#FFF", boundsAlignH: "center", boundsAlignV: "middle" });
 
 		// ADDING THE HIGH SCORE BACKGROUND
 		this.highScoreBackground = game.add.graphics();
-		this.highScoreBackground.beginFill(0x022c5c, 1);
-		this.highScoreBackground.lineStyle(2, 0x0046a9, 1);
+		this.highScoreBackground.beginFill(0x022C5C, 1);
+		this.highScoreBackground.lineStyle(2, 0x0046A9, 1);
 		this.highScoreBackground.drawRoundedRect(50, -540, 140, 40, 10);
 
 		// ADDING THE HIGH SCORE ICON SHADOW
