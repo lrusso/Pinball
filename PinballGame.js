@@ -507,7 +507,6 @@ Pinball.Game.prototype = {
 			this.launcherGoingUp = true;
 			}, this);
 
-
 		// ADDING THE BALL LAUNCHER CONTAINER
 		this.launcherContainer = game.add.sprite(148.5, 50, "");
 
