@@ -513,7 +513,7 @@ Pinball.Game.prototype = {
 		this.scoreLabelShadow = game.add.text(-157, -535, this.scoreValue, { font: "bold 30px Arial", fill: "#000", boundsAlignH: "center", boundsAlignV: "middle" });
 
 		// ADDING THE SCORE LABEL
-		this.scoreLabel = game.add.text(-160, -537, "0000", { font: "bold 30px Arial", fill: "#FFF", boundsAlignH: "center", boundsAlignV: "middle" });
+		this.scoreLabel = game.add.text(-160, -537, this.scoreValue, { font: "bold 30px Arial", fill: "#FFF", boundsAlignH: "center", boundsAlignV: "middle" });
 
 		// ADDING THE HIGH SCORE BACKGROUND
 		this.highScoreBackground = game.add.graphics();
