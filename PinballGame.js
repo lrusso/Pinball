@@ -478,7 +478,7 @@ Pinball.Game.prototype = {
 		this.gutterFixture.SetSensor(true);
 
 		// SETTING THE RESTITUTION FOR LAUNCHER
-		game.physics.box2d.restitution = 2;
+		game.physics.box2d.restitution = 2.5;
 		this.launcherFixture = this.pinballBoard.addEdge(this.launcherVertices[0], this.launcherVertices[1], this.launcherVertices[2], this.launcherVertices[3]);
 
 		// ADDING THE BOX 2D BALL BODY
