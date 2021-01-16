@@ -142,9 +142,11 @@ Pinball.Game = function(game)
 	this.gameOver = false;
 	this.flipperJoints = [];
 	this.mediumCirclesList = [];
-	this.mediumCirclesGlowList = [];
 	this.mediumCirclesHitList = [];
+	this.mediumCirclesGlowList = [];
 	this.largeCirclesList = [];
+	this.largeCirclesHitList = [];
+	this.largeCirclesGlowList = [];
 	this.isMobileDevice = null;
 
 	// SCALING THE CANVAS SIZE FOR THE GAME
@@ -203,9 +205,11 @@ Pinball.Game.prototype = {
 		this.gameOver = false;
 		this.flipperJoints = [];
 		this.mediumCirclesList = [];
-		this.mediumCirclesGlowList = [];
 		this.mediumCirclesHitList = [];
+		this.mediumCirclesGlowList = [];
 		this.largeCirclesList = [];
+		this.largeCirclesHitList = [];
+		this.largeCirclesGlowList = [];
 		},
 
 	create: function()
@@ -400,6 +404,7 @@ Pinball.Game.prototype = {
 
 			// ADDING THE CIRCLE TO THE MEDIUM CIRCLE LIST
 			this.mediumCirclesList[i] = this.pinballBoard.addCircle(1 * this.PTM, this.mediumCircles[2 * i + 0], this.mediumCircles[2 * i + 1]);
+			this.mediumCirclesList[i].circleType = "medium";
 			this.mediumCirclesList[i].circleIndex = i;
 
 			// ADDING THE MEDIUM CIRCLE SHADOW
@@ -418,7 +423,7 @@ Pinball.Game.prototype = {
 
 			// ADDING THE MEDIUM CIRCLE GLOW SPRITE
 			this.mediumCirclesGlowList[i] = game.add.graphics(mediumCircleX, mediumCircleY);
-			this.mediumCirclesGlowList[i].beginFill(0xFFFFFF, 0.2);
+			this.mediumCirclesGlowList[i].beginFill(0xFFFFFF, 0.4);
 			this.mediumCirclesGlowList[i].drawCircle(12, 12, 24);
 			this.mediumCirclesGlowList[i].visible = false;
 			}
@@ -426,16 +431,32 @@ Pinball.Game.prototype = {
 		// ADDING THE LARGE CIRCLES
 		for(var i = 0; i < this.largeCircles.length / 2; i++)
 			{
+			var largeCircleX = Math.floor(this.largeCircles[2 * i + 0] * 0.10 - 26.45);
+			var largeCircleY = Math.floor(this.largeCircles[2 * i + 1] * 0.10 - 26.45);
+
 			// ADDING THE CIRCLE TO THE LARGE CIRCLE LIST
 			this.largeCirclesList[i] = this.pinballBoard.addCircle(2.8 * this.PTM, this.largeCircles[2 * i + 0], this.largeCircles[2 * i + 1]);
+			this.largeCirclesList[i].circleType = "large";
 			this.largeCirclesList[i].circleIndex = i;
 
 			// ADDING THE LARGE CIRCLE SHADOW
-			var tempCircleShadow = this.add.sprite(this.largeCircles[2 * i + 0] * 0.10 - 26.45 + 1,this.largeCircles[2 * i + 1] * 0.10 - 26.45 + 1,"largeCircleImg");
+			var tempCircleShadow = this.add.sprite(largeCircleX + 1,largeCircleY + 1,"largeCircleImg");
 			tempCircleShadow.tint = 0x343434;
 
+			// ADDING THE LARGE CIRCLE HIT SPRITE
+			this.largeCirclesHitList[i] = game.add.graphics(largeCircleX, largeCircleY);
+			this.largeCirclesHitList[i].beginFill(0xFFFF00, 0.4);
+			this.largeCirclesHitList[i].drawCircle(27.5, 27.5, 58);
+			this.largeCirclesHitList[i].visible = false;
+
 			// ADDING THE LARGE CIRCLE SPRITE
-			this.add.sprite(this.largeCircles[2 * i + 0] * 0.10 - 26.45,this.largeCircles[2 * i + 1] * 0.10 - 26.45,"largeCircleImg");
+			this.add.sprite(largeCircleX,largeCircleY,"largeCircleImg");
+
+			// ADDING THE LARGE CIRCLE GLOW SPRITE
+			this.largeCirclesGlowList[i] = game.add.graphics(largeCircleX, largeCircleY);
+			this.largeCirclesGlowList[i].beginFill(0xFFFFFF, 0.5);
+			this.largeCirclesGlowList[i].drawCircle(27, 27, 54);
+			this.largeCirclesGlowList[i].visible = false;
 			}
 
 		// ADDING THE GUTTER FIXTURE
@@ -469,32 +490,62 @@ Pinball.Game.prototype = {
 			// SETTING THE CALLBACK AND WHAT WILL HAPPEN WHEN THE BALL HITS A MEDIUM CIRCLE
 			this.ballBody.setFixtureContactCallback(this.mediumCirclesList[i], function (a,b,c,d,e)
 				{
-				// SHOWING THE MEDIUM CIRCLE HIT SPRITE
-				this.mediumCirclesHitList[d.circleIndex].visible = true;
-
-				// SHOWING THE MEDIUM CIRCLE GLOW SPRITE
-				this.mediumCirclesGlowList[d.circleIndex].visible = true;
-
-				// ADDING 10 POINTS TO THE SCORE
-				this.updateScore(this.scoreValue + 10);
-
-				// WAITING 200 MS
-				setTimeout(function ()
+				// CHECKING THE CIRCLE TYPE
+				if (d.circleType=="medium")
 					{
-					// HIDING THE MEDIUM CIRCLE HIT SPRITE
-					game.state.states["Pinball.Game"].mediumCirclesHitList[d.circleIndex].visible = false;
+					// SHOWING THE MEDIUM CIRCLE HIT SPRITE
+					this.mediumCirclesHitList[d.circleIndex].visible = true;
 
-					// HIDING THE MEDIUM CIRCLE GLOW SPRITE
-					game.state.states["Pinball.Game"].mediumCirclesGlowList[d.circleIndex].visible = false;
-					},200);
+					// SHOWING THE MEDIUM CIRCLE GLOW SPRITE
+					this.mediumCirclesGlowList[d.circleIndex].visible = true;
+
+					// ADDING 10 POINTS TO THE SCORE
+					this.updateScore(this.scoreValue + 10);
+
+					// WAITING 200 MS
+					setTimeout(function ()
+						{
+						// HIDING THE MEDIUM CIRCLE HIT SPRITE
+						game.state.states["Pinball.Game"].mediumCirclesHitList[d.circleIndex].visible = false;
+
+						// HIDING THE MEDIUM CIRCLE GLOW SPRITE
+						game.state.states["Pinball.Game"].mediumCirclesGlowList[d.circleIndex].visible = false;
+						},200);
+					}
 				}
 			,this);
 			}
 
-		// SETTING A CALLBACK WHEN THE BALL HITS A LARGE CIRCLE
+		// LOOPING ALL THE LARGE CIRCLES IN ORDER TO SET A CALLBACK WHEN THE BALL HITS A LARGE CIRCLE
 		for(var i = 0; i < this.largeCirclesList.length; i++)
 			{
-			this.ballBody.setFixtureContactCallback(this.largeCirclesList[i], this.hittingLargeCircle, this);
+			// SETTING THE CALLBACK AND WHAT WILL HAPPEN WHEN THE BALL HITS A LARGE CIRCLE
+			this.ballBody.setFixtureContactCallback(this.largeCirclesList[i], function (a,b,c,d,e)
+				{
+				// CHECKING THE CIRCLE TYPE
+				if (d.circleType=="large")
+					{
+					// SHOWING THE LARGE CIRCLE HIT SPRITE
+					this.largeCirclesHitList[d.circleIndex].visible = true;
+
+					// SHOWING THE LARGE CIRCLE GLOW SPRITE
+					this.largeCirclesGlowList[d.circleIndex].visible = true;
+
+					// ADDING 20 POINTS TO THE SCORE
+					this.updateScore(this.scoreValue + 20);
+
+					// WAITING 200 MS
+					setTimeout(function ()
+						{
+						// HIDING THE LARGE CIRCLE HIT SPRITE
+						game.state.states["Pinball.Game"].largeCirclesHitList[d.circleIndex].visible = false;
+
+						// HIDING THE LARGE CIRCLE GLOW SPRITE
+						game.state.states["Pinball.Game"].largeCirclesGlowList[d.circleIndex].visible = false;
+						},200);
+					}
+				}
+			,this);
 			}
 
 		// SETTING THE RESTITUTION FOR THE FLIPPERS
@@ -698,12 +749,6 @@ Pinball.Game.prototype = {
 			// SHOWING THE DEBUG LAYOUT
 			game.debug.box2dWorld();
 			}
-		},
-
-	hittingLargeCircle: function()
-		{
-		// ADDING 20 POINTS TO THE SCORE
-		this.updateScore(this.scoreValue + 20);
 		},
 
 	updateScore: function(newScore)
