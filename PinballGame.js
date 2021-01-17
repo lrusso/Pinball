@@ -720,12 +720,15 @@ Pinball.Game.prototype = {
 		this.soundHandlerOnBackground.input.useHandCursor = true;
 		this.soundHandlerOnBackground.events.onInputUp.add(function()
 			{
+			// SHOWING THE SOUND HANDLER OFF BACKGROUND AND ICON
 			this.soundHandlerOffBackground.visible = true;
 			this.soundHandlerOffSprite.visible = true;
 
+			// HIDING THE SOUND HANDLER ON BACKGROUND AND ICON
 			this.soundHandlerOnBackground.visible = false;
 			this.soundHandlerOnSprite.visible = false;
 
+			// SETTING THAT THE SOUND IS DISABLED
 			this.soundEnabled = false;
 			},this);
 
@@ -741,12 +744,15 @@ Pinball.Game.prototype = {
 		this.soundHandlerOffBackground.input.useHandCursor = true;
 		this.soundHandlerOffBackground.events.onInputUp.add(function()
 			{
+			// SHOWING THE SOUND HANDLER ON BACKGROUND AND ICON
 			this.soundHandlerOnBackground.visible = true;
 			this.soundHandlerOnSprite.visible = true;
 
+			// HIDING THE SOUND HANDLER OFF BACKGROUND AND ICON
 			this.soundHandlerOffBackground.visible = false;
 			this.soundHandlerOffSprite.visible = false;
 
+			// SETTING THAT THE SOUND IS ENABLED
 			this.soundEnabled = true;
 			},this);
 
