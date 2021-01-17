@@ -683,7 +683,7 @@ Pinball.Game.prototype = {
 		// ADDING THE SCORE BACKGROUND
 		this.scoreBackground = game.add.graphics();
 		this.scoreBackground.beginFill(0x000000, 0.7);
-		this.scoreBackground.lineStyle(2, 0x525252, 1);
+		this.scoreBackground.lineStyle(2, 0x383838, 1);
 		this.scoreBackground.drawRoundedRect(-200, -540, 140, 40, 10);
 
 		// ADDING THE SCORE LABEL SHADOW
