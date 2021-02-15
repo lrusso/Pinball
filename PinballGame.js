@@ -960,7 +960,7 @@ Pinball.Game.prototype = {
 		{
 		try
 			{
-			var name = "highscorePinball";
+			var name = "highscorepinball";
 			var nameEQ = name + "=";
 			var ca = document.cookie.split(";");
 
@@ -985,7 +985,7 @@ Pinball.Game.prototype = {
 		{
 		try
 			{
-			var name = "highscorePinball";
+			var name = "highscorepinball";
 			var value = newHighscore;
 			var days = 999;
 			var expires = "";
