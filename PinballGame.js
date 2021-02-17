@@ -170,6 +170,13 @@ Pinball.Game = function(game)
 	this.largeCirclesList = [];
 	this.largeCirclesHitList = [];
 	this.largeCirclesGlowList = [];
+
+	this.keyA = null;
+	this.keyD = null;
+	this.pad = null;
+	this.buttonA = null;
+	this.buttonB = null;
+
 	this.isMobileDevice = null;
 
 	this.audioPlayer = null;
@@ -249,6 +256,13 @@ Pinball.Game.prototype = {
 		this.largeCirclesList = [];
 		this.largeCirclesHitList = [];
 		this.largeCirclesGlowList = [];
+
+		this.keyA = null;
+		this.keyD = null;
+		this.pad = null;
+		this.buttonA = null;
+		this.buttonB = null;
+
 		this.isMobileDevice = null;
 
 		this.audioPlayer = null;
