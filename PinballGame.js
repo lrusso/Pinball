@@ -843,7 +843,7 @@ Pinball.Game.prototype = {
 		this.rightFlipperSprite.angle = this.rightFlipper.angle;
 
 		// CHECKING IF PRESSING THE LEFT OR 'A' KEY
-		if(this.cursors.left.isDown || this.keyA.isDown)
+		if(this.cursors.left.isDown==true || this.keyA.isDown==true)
 			{
 			// CHECKING IF THE SOUND IS ENABLED
 			if (this.soundEnabled==true)
@@ -867,7 +867,7 @@ Pinball.Game.prototype = {
 			}
 
 		// CHECKING IF PRESSING THE RIGHT OR 'D' KEY
-		if(this.cursors.right.isDown || this.keyD.isDown)
+		if(this.cursors.right.isDown==true || this.keyD.isDown==true)
 			{
 			// CHECKING IF THE SOUND IS ENABLED
 			if (this.soundEnabled==true)
