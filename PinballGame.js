@@ -1122,7 +1122,7 @@ Pinball.Game.prototype = {
 	};
 
 // CREATING THE GAME INSTANCE
-var config = {width: 335, height: 600, renderer: Phaser.WEBGL, parent: "content", disableVisibilityChange: false};
+var config = {width: 335, height: 600, renderer: Phaser.WEBGL, parent: "content", disableVisibilityChange: true};
 var game = new Phaser.Game(config);
 
 // CREATING THE STATES
