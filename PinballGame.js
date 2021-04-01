@@ -241,7 +241,6 @@ Pinball.Game = function(game)
 
 	this.keyA = null;
 	this.keyD = null;
-	this.pad = null;
 	this.buttonANormal = null;
 	this.buttonAPressed = null;
 	this.buttonAHandler = null;
@@ -331,7 +330,6 @@ Pinball.Game.prototype = {
 
 		this.keyA = null;
 		this.keyD = null;
-		this.pad = null;
 		this.buttonANormal = null;
 		this.buttonAPressed = null;
 		this.buttonAHandler = null;
