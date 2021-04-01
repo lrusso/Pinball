@@ -842,27 +842,27 @@ Pinball.Game.prototype = {
 		// ADDING THE SOUND HANDLER ON SPRITE
 		this.soundHandlerOffSprite = game.add.sprite(-17.5, -531.25, "imagesoundOff");
 
+		// ADDING THE PAD PLUGIN
+		this.pad = this.game.plugins.add(Phaser.VirtualJoystick);
+
+		// ADDING THE BUTTON A
+		this.buttonA = this.pad.addButton(50, 550, "dpad", "button1-up", "button1-down");
+		this.buttonA.sprite.scale.set(0.8);
+		this.buttonA.sprite.tint = 0xA9A9A9;
+
+		// ADDING THE BUTTON B
+		this.buttonB = this.pad.addButton(285, 550, "dpad", "button2-up", "button2-down");
+		this.buttonB.sprite.scale.set(0.8);
+		this.buttonB.sprite.tint = 0xA9A9A9;
+
 		// CHECKING IF IT IS A MOBILE DEVICE
-		if (this.isMobileDevice==true)
+		if (this.isMobileDevice==false)
 			{
-			// ADDING THE PAD PLUGIN
-			this.pad = this.game.plugins.add(Phaser.VirtualJoystick);
+			// HIDING THE BUTTON A
+			this.buttonA.visible = false;
 
-			// ADDING THE BUTTON A
-			this.buttonA = this.pad.addButton(50, 550, "dpad", "button1-up", "button1-down");
-			this.buttonA.sprite.scale.set(0.8);
-			this.buttonA.sprite.tint = 0xA9A9A9;
-			this.buttonA.sprite.inputEnabled = true;
-			this.buttonA.sprite.events.onInputDown.add(function(){this.cursors.left.isDown=true;},this);
-			this.buttonA.sprite.events.onInputUp.add(function(){this.cursors.left.isDown=false;},this);
-
-			// ADDING THE BUTTON B
-			this.buttonB = this.pad.addButton(285, 550, "dpad", "button2-up", "button2-down");
-			this.buttonB.sprite.scale.set(0.8);
-			this.buttonB.sprite.tint = 0xA9A9A9;
-			this.buttonB.sprite.inputEnabled = true;
-			this.buttonB.sprite.events.onInputDown.add(function(){this.cursors.right.isDown=true;},this);
-			this.buttonB.sprite.events.onInputUp.add(function(){this.cursors.right.isDown=false;},this);
+			// HIDING THE BUTTON B
+			this.buttonB.visible = false;
 			}
 
 		// GETTING THE CURSOR KEY INPUTS
@@ -912,7 +912,7 @@ Pinball.Game.prototype = {
 		this.rightFlipperSprite.angle = this.rightFlipper.angle;
 
 		// CHECKING IF PRESSING THE LEFT OR 'A' KEY
-		if(this.cursors.left.isDown==true || this.keyA.isDown==true)
+		if(this.cursors.left.isDown==true || this.keyA.isDown==true || this.buttonA.isDown==true)
 			{
 			// CHECKING IF THE SOUND IS ENABLED
 			if (this.soundEnabled==true)
@@ -936,7 +936,7 @@ Pinball.Game.prototype = {
 			}
 
 		// CHECKING IF PRESSING THE RIGHT OR 'D' KEY
-		if(this.cursors.right.isDown==true || this.keyD.isDown==true)
+		if(this.cursors.right.isDown==true || this.keyD.isDown==true || this.buttonB.isDown==true)
 			{
 			// CHECKING IF THE SOUND IS ENABLED
 			if (this.soundEnabled==true)
