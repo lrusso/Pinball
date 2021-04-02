@@ -13,21 +13,6 @@ function isWebGLAvailable(){if(window.WebGLRenderingContext){for(var e=document.
 // isMobileDevice.js
 function isMobileDevice(){return!!(navigator.userAgent.match(/Android/i)||navigator.userAgent.match(/webOS/i)||navigator.userAgent.match(/iPhone/i)||navigator.userAgent.match(/iPad/i)||navigator.userAgent.match(/iPod/i)||navigator.userAgent.match(/BlackBerry/i)||navigator.userAgent.match(/Windows Phone/i))}
 
-// GETTING THE USER LANGUAGE
-var userLanguage = window.navigator.userLanguage || window.navigator.language;
-
-var STRING_ABOUT = "";
-
-// CHECKING THE USER LANGUAGE
-if (userLanguage.substring(0,2)=="es")
-	{
-	STRING_ABOUT = "Dise" + String.fromCharCode(241) + "ado por www.lrusso.com";
-	}
-	else
-	{
-	STRING_ABOUT = "Designed by www.lrusso.com";
-	}
-
 var Pinball = {showDebug: false};
 
 Pinball.Preloader = function(){};
