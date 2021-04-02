@@ -91,7 +91,7 @@ Pinball.Preloader.prototype = {
 	create: function()
 		{
 		// STARTING THE GAME
-		this.state.start("Pinball.Game");
+		this.state.start("Pinball.Splash");
 		}
 	};
 
