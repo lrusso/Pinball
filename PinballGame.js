@@ -790,12 +790,12 @@ Pinball.Game.prototype = {
 		// ADDING THE HIGH SCORE ICON
 		this.highScoreIcon = game.add.sprite(57, -532, "imageHighScore");
 
-		// ADDING THE SCORE LABEL SHADOW
+		// ADDING THE HIGH SCORE LABEL SHADOW
 		this.highScoreLabelShadow = game.add.bitmapText(92, -531, "ArialBlackWhite", this.getHighscore(), 25);
 		this.highScoreLabelShadow.height = 30;
 		this.highScoreLabelShadow.tint = 0x000000;
 
-		// ADDING THE SCORE LABEL
+		// ADDING THE HIGH SCORE LABEL
 		this.highScoreLabel = game.add.bitmapText(89, -533, "ArialBlackWhite", this.getHighscore(), 25);
 		this.highScoreLabel.height = 30;
 
