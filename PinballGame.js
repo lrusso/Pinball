@@ -1122,7 +1122,7 @@ Pinball.Game.prototype = {
 		}
 	};
 
-// CHECKING EVERY 250 MS IF THE DOCUMENT HAS FOCUS
+// CHECKING EVERY 200 MS IF THE DOCUMENT HAS FOCUS
 setInterval(function()
 	{
 	try
@@ -1142,7 +1142,7 @@ setInterval(function()
 		catch(err)
 		{
 		}
-	}, 250);
+	}, 200);
 
 // SETTING THE DEFAULT RENDERER MODE
 var rendererMode = Phaser.WEBGL;
