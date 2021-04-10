@@ -931,119 +931,107 @@ Pinball.Game.prototype = {
 
 	update: function()
 		{
-		// CHECKING IF THE TAB IS ACTIVE
-		if (isTabActive==true)
+		// CHECKING IF THE GAME IS OVER
+		if(this.gameOver==true)
 			{
-			// RESUMING THE BOX2D PHYSICS
-			game.physics.box2d.resume();
+			// RESTORING THE BALL THE STARTING POSITION
+			this.ballBody.x = this.ballStart[0]*this.PTM;
+			this.ballBody.y = this.ballStart[1]*this.PTM;
 
-			// CHECKING IF THE GAME IS OVER
-			if(this.gameOver==true)
+			// CLEARING THE BALL VELOCITY
+			this.ballBody.velocity.x = 0;
+			this.ballBody.velocity.y = 0;
+			this.ballBody.angularVelocity = 0;
+
+			// SETTING THAT THE GAME IS NOT OVER
+			this.gameOver = false;
+			}
+
+		// THE BALL SPRITE MUST ALWAYS FOLLOW THE BOX2D BALL BODY
+		this.ballSprite.position.x = this.ballBody.x * 0.10 - 6;
+		this.ballSprite.position.y = this.ballBody.y * 0.10 - 6;
+
+		// THE LEFT FLIPPER SPRITE MUST ALWAYS FOLLOW THE BOX2D LEFT FLIPPER
+		this.leftFlipperSprite.angle = this.leftFlipper.angle;
+
+		// THE RIGHT FLIPPER SPRITE MUST ALWAYS FOLLOW THE BOX2D RIGHT FLIPPER
+		this.rightFlipperSprite.angle = this.rightFlipper.angle;
+
+		// CHECKING IF PRESSING THE LEFT OR 'A' KEY
+		if(this.cursors.left.isDown==true || this.keyA.isDown==true || this.buttonAHandler.isDown==true)
+			{
+			// CHECKING IF THE SOUND IS ENABLED
+			if (this.soundEnabled==true)
 				{
-				// RESTORING THE BALL THE STARTING POSITION
-				this.ballBody.x = this.ballStart[0]*this.PTM;
-				this.ballBody.y = this.ballStart[1]*this.PTM;
-
-				// CLEARING THE BALL VELOCITY
-				this.ballBody.velocity.x = 0;
-				this.ballBody.velocity.y = 0;
-				this.ballBody.angularVelocity = 0;
-
-				// SETTING THAT THE GAME IS NOT OVER
-				this.gameOver = false;
-				}
-
-			// THE BALL SPRITE MUST ALWAYS FOLLOW THE BOX2D BALL BODY
-			this.ballSprite.position.x = this.ballBody.x * 0.10 - 6;
-			this.ballSprite.position.y = this.ballBody.y * 0.10 - 6;
-
-			// THE LEFT FLIPPER SPRITE MUST ALWAYS FOLLOW THE BOX2D LEFT FLIPPER
-			this.leftFlipperSprite.angle = this.leftFlipper.angle;
-
-			// THE RIGHT FLIPPER SPRITE MUST ALWAYS FOLLOW THE BOX2D RIGHT FLIPPER
-			this.rightFlipperSprite.angle = this.rightFlipper.angle;
-
-			// CHECKING IF PRESSING THE LEFT OR 'A' KEY
-			if(this.cursors.left.isDown==true || this.keyA.isDown==true || this.buttonAHandler.isDown==true)
-				{
-				// CHECKING IF THE SOUND IS ENABLED
-				if (this.soundEnabled==true)
+				// CHECKING IF THE LEFT FLIPPER IS DOWN
+				if (this.flipperJoints[0].m_motorSpeed!=-15)
 					{
-					// CHECKING IF THE LEFT FLIPPER IS DOWN
-					if (this.flipperJoints[0].m_motorSpeed!=-15)
-						{
-						// PLAYING THE FLIPPER SOUND
-						this.audioPlayer = this.add.audio("soundFlipper");
-						this.audioPlayer.play();
-						}
-					}
-
-				// RAISING THE LEFT FLIPPER
-				this.flipperJoints[0].SetMotorSpeed(-15);
-				}
-				else
-				{
-				// LOWERING THE LEFT FLIPPER
-				this.flipperJoints[0].SetMotorSpeed(15);
-				}
-
-			// CHECKING IF PRESSING THE RIGHT OR 'D' KEY
-			if(this.cursors.right.isDown==true || this.keyD.isDown==true || this.buttonBHandler.isDown==true)
-				{
-				// CHECKING IF THE SOUND IS ENABLED
-				if (this.soundEnabled==true)
-					{
-					// CHECKING IF THE RIGHT FLIPPER IS DOWN
-					if (this.flipperJoints[1].m_motorSpeed!=15)
-						{
-						// PLAYING THE FLIPPER SOUND
-						this.audioPlayer = this.add.audio("soundFlipper");
-						this.audioPlayer.play();
-						}
-					}
-
-				// RAISING THE RIGHT FLIPPER
-				this.flipperJoints[1].SetMotorSpeed(15);
-				}
-				else
-				{
-				// LOWERING THE RIGHT FLIPPER
-				this.flipperJoints[1].SetMotorSpeed(-15);
-				}
-
-			// CHECKING IF THE LAUNCHER IS MOVING
-			if (this.launcherIsMoving==true)
-				{
-				// CHECKING IF THE LAUNCHER IS GOING UP
-				if (this.launcherGoingUp==true)
-					{
-					// MOVING UP THE LAUNCHER
-					this.launcherSprite.position.y = this.launcherSprite.position.y - 10;
-					}
-					else
-					{
-					// MOVING DOWN THE LAUNCHER
-					this.launcherSprite.position.y = this.launcherSprite.position.y + 10;
-					}
-
-				// CHECKING IF THE LAUNCHER HITS THE TOP LIMIT
-				if (this.launcherSprite.position.y<=-160)
-					{
-					// SETTING THAT THE LAUNCHER WILL BE GOING DOWN
-					this.launcherGoingUp = false;
-					}
-				// CHECKING IF THE LAUNCHER HITS THE BOTTOM LIMIT
-				else if (this.launcherSprite.position.y>=-100)
-					{
-					// SETTING THAT THE LAUNCHER WILL NOT BE MOVING ANY MORE
-					this.launcherIsMoving = false;
+					// PLAYING THE FLIPPER SOUND
+					this.audioPlayer = this.add.audio("soundFlipper");
+					this.audioPlayer.play();
 					}
 				}
+
+			// RAISING THE LEFT FLIPPER
+			this.flipperJoints[0].SetMotorSpeed(-15);
 			}
 			else
 			{
-			// PAUSING THE BOX2D PHYSICS
-			game.physics.box2d.pause();
+			// LOWERING THE LEFT FLIPPER
+			this.flipperJoints[0].SetMotorSpeed(15);
+			}
+
+		// CHECKING IF PRESSING THE RIGHT OR 'D' KEY
+		if(this.cursors.right.isDown==true || this.keyD.isDown==true || this.buttonBHandler.isDown==true)
+			{
+			// CHECKING IF THE SOUND IS ENABLED
+			if (this.soundEnabled==true)
+				{
+				// CHECKING IF THE RIGHT FLIPPER IS DOWN
+				if (this.flipperJoints[1].m_motorSpeed!=15)
+					{
+					// PLAYING THE FLIPPER SOUND
+					this.audioPlayer = this.add.audio("soundFlipper");
+					this.audioPlayer.play();
+					}
+				}
+
+			// RAISING THE RIGHT FLIPPER
+			this.flipperJoints[1].SetMotorSpeed(15);
+			}
+			else
+			{
+			// LOWERING THE RIGHT FLIPPER
+			this.flipperJoints[1].SetMotorSpeed(-15);
+			}
+
+		// CHECKING IF THE LAUNCHER IS MOVING
+		if (this.launcherIsMoving==true)
+			{
+			// CHECKING IF THE LAUNCHER IS GOING UP
+			if (this.launcherGoingUp==true)
+				{
+				// MOVING UP THE LAUNCHER
+				this.launcherSprite.position.y = this.launcherSprite.position.y - 10;
+				}
+				else
+				{
+				// MOVING DOWN THE LAUNCHER
+				this.launcherSprite.position.y = this.launcherSprite.position.y + 10;
+				}
+
+			// CHECKING IF THE LAUNCHER HITS THE TOP LIMIT
+			if (this.launcherSprite.position.y<=-160)
+				{
+				// SETTING THAT THE LAUNCHER WILL BE GOING DOWN
+				this.launcherGoingUp = false;
+				}
+			// CHECKING IF THE LAUNCHER HITS THE BOTTOM LIMIT
+			else if (this.launcherSprite.position.y>=-100)
+				{
+				// SETTING THAT THE LAUNCHER WILL NOT BE MOVING ANY MORE
+				this.launcherIsMoving = false;
+				}
 			}
 		},
 
@@ -1134,20 +1122,19 @@ Pinball.Game.prototype = {
 		}
 	};
 
-// VARIABLE TO CHECK IF THE TAB IS ACTIVE
-var isTabActive = true;
-
-// CHECKING EVERY 250 MS IF THE TAB IS ACTIVE
+// CHECKING EVERY 250 MS IF THE DOCUMENT HAS FOCUS
 setInterval(function()
 	{
 	// CHECKING IF THE DOCUMENT HAS FOCUS
 	if(document.hasFocus()==true)
 		{
-		isTabActive = true;
+		// RESUMING THE GAME
+		game.paused = false;
 		}
 		else
 		{
-		isTabActive = false
+		// PAUSING THE GAME
+		game.paused = true;
 		}
 }, 250);
 
