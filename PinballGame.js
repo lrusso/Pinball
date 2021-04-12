@@ -91,7 +91,7 @@ Pinball.Preloader.prototype = {
 	create: function()
 		{
 		// STARTING THE GAME
-		this.state.start("Pinball.Splash");
+		this.state.start("Pinball.Game");
 		}
 	};
 
@@ -871,7 +871,7 @@ Pinball.Game.prototype = {
 		this.buttonAHandler.isDown = false;
 		this.buttonAHandler.inputEnabled = true;
 		this.buttonAHandler.fixedToCamera = true;
-		this.buttonAHandler.events.onInputDown.add(function(){this.buttonAHandler.isDown=true;this.buttonANormal.visible=false;this.buttonAPressed.visible=true;},this);
+		this.buttonAHandler.events.onInputDown.add(function(){this.buttonAHandler.isDown=true;this.buttonANormal.visible=false;this.buttonAPressed.visible=true;this.update();},this);
 		this.buttonAHandler.events.onInputUp.add(function(){this.buttonAHandler.isDown=false;this.buttonANormal.visible=true;this.buttonAPressed.visible=false;},this);
 
 		// ADDING THE NORMAL BUTTON B
@@ -894,7 +894,7 @@ Pinball.Game.prototype = {
 		this.buttonBHandler.isDown = false;
 		this.buttonBHandler.inputEnabled = true;
 		this.buttonBHandler.fixedToCamera = true;
-		this.buttonBHandler.events.onInputDown.add(function(){this.buttonBHandler.isDown=true;this.buttonBNormal.visible=false;this.buttonBPressed.visible=true;},this);
+		this.buttonBHandler.events.onInputDown.add(function(){this.buttonBHandler.isDown=true;this.buttonBNormal.visible=false;this.buttonBPressed.visible=true;this.update();},this);
 		this.buttonBHandler.events.onInputUp.add(function(){this.buttonBHandler.isDown=false;this.buttonBNormal.visible=true;this.buttonBPressed.visible=false;},this);
 
 		// CHECKING IF IT IS A MOBILE DEVICE
@@ -977,8 +977,12 @@ Pinball.Game.prototype = {
 			}
 			else
 			{
-			// LOWERING THE LEFT FLIPPER
-			this.flipperJoints[0].SetMotorSpeed(15);
+			// CHECKING IF THE LEFT FLIPPER MUST BE LOWERING
+			if (-25>this.leftFlipper.angle)
+				{
+				// LOWERING THE LEFT FLIPPER
+				this.flipperJoints[0].SetMotorSpeed(15);
+				}
 			}
 
 		// CHECKING IF PRESSING THE RIGHT OR 'D' KEY
@@ -1001,8 +1005,12 @@ Pinball.Game.prototype = {
 			}
 			else
 			{
-			// LOWERING THE RIGHT FLIPPER
-			this.flipperJoints[1].SetMotorSpeed(-15);
+			// CHECKING IF THE RIGHT FLIPPER MUST BE LOWERING
+			if (25<this.rightFlipper.angle)
+				{
+				// LOWERING THE RIGHT FLIPPER
+				this.flipperJoints[1].SetMotorSpeed(-15);
+				}
 			}
 
 		// CHECKING IF THE LAUNCHER IS MOVING
