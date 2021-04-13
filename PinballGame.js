@@ -358,7 +358,7 @@ Pinball.Game.prototype = {
 		this.pinballBoardMask.endFill();
 
 		// ADDING THE PINBALL BOARD BACKGROUND IMAGE
-		this.pinballBoardImage = this.add.sprite(-150, -552, "imageBoard");
+		this.pinballBoardImage = this.add.sprite(-150, -540, "imageBoard");
 		this.pinballBoardImage.mask = this.pinballBoardMask;
 
 		// ADDING THE PINBALL BOARD BACKGROUND LINE
