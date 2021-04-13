@@ -158,7 +158,7 @@ Pinball.Splash.prototype = {
 
 Pinball.Game = function(game)
 	{
-	this.outlineVertices = [1440,-3687,1023,-2194,1345,-1961,1345,-663,638,-480,160,-154,150,471,-318,470,-319,-153,-800,-480,-1519,-619,-1518,-1988,-1147,-2175,-1429,-3152,-1500,-3195,-1492,-3399,-1438,-3867,-1309,-4132,-1112,-4351,-787,-4540,-389,-4670,139,-4778,655,-4846,872,-4837,1067,-4792,1236,-4700,1374,-4584,1480,-4440,1557,-4271,1601,-3992,1601,-3712,1600,-171,1442,-169,1440,-3687];
+	this.outlineVertices = [1440,-3687,1023,-2194,1345,-1961,1345,-663,638,-480,160,-154,150,971,-330,970,-335,-153,-800,-480,-1519,-619,-1518,-1988,-1147,-2175,-1429,-3152,-1500,-3195,-1492,-3399,-1438,-3867,-1309,-4132,-1112,-4351,-787,-4540,-389,-4670,139,-4778,655,-4846,872,-4837,1067,-4792,1236,-4700,1374,-4584,1480,-4440,1557,-4271,1601,-3992,1601,-3712,1600,-171,1442,-169,1440,-3687];
 	this.launcherVertices = [1401,-500,1631,-500];
 	this.guide1Vertices = [-825,-746,-771,-853,-1280,-1120,-1280,-1759,-1360,-1759,-1360,-959,-825,-746];
 	this.guide2Vertices = [663,-743,614,-855,1119,-1121,1123,-1760,1200,-1759,1200,-959,663,-743];
@@ -339,7 +339,7 @@ Pinball.Game.prototype = {
 		this.isMobileDevice = isMobileDevice();
 
 		// SETTING THE GAME BOUNDS
-		game.world.setBounds(-430, -555, 600, 335);
+		game.world.setBounds(-430, -552, 600, 335);
 
 		// ADDING THE BACKGROUND IMAGE
 		this.add.tileSprite(-170, -555, 600, 835, "imageBackground");
@@ -358,7 +358,7 @@ Pinball.Game.prototype = {
 		this.pinballBoardMask.endFill();
 
 		// ADDING THE PINBALL BOARD BACKGROUND IMAGE
-		this.pinballBoardImage = this.add.sprite(-150, -555, "imageBoard");
+		this.pinballBoardImage = this.add.sprite(-150, -552, "imageBoard");
 		this.pinballBoardImage.mask = this.pinballBoardMask;
 
 		// ADDING THE PINBALL BOARD BACKGROUND LINE
@@ -757,8 +757,8 @@ Pinball.Game.prototype = {
 		this.rightFlipperSprite.position.y = this.rightFlipper.y * 0.10;
 
 		// SETTING THE FLIPPER JOINTS							(BODYA, BODYB, AX, AY, BX, BY, MOTORSPEED, MOTORTORQUE, MOTORENABLED, LOWERLIMIT, UPPERLIMIT, LIMITENABLED)
-		this.flipperJoints[0] = game.physics.box2d.revoluteJoint(this.pinballBoard, this.leftFlipper,   -8 * this.PTM, -7.99956 * this.PTM, 0, 0, 2, 100, true, -25, 25, true);
-		this.flipperJoints[1] = game.physics.box2d.revoluteJoint(this.pinballBoard, this.rightFlipper, 6.4 * this.PTM, -7.99956 * this.PTM, 0, 0, 2, 100, true, -25, 25, true);
+		this.flipperJoints[0] = game.physics.box2d.revoluteJoint(this.pinballBoard, this.leftFlipper,   -8 * this.PTM, -7.99956 * this.PTM, 0, 0, 2, 100, false, -25, 25, true);
+		this.flipperJoints[1] = game.physics.box2d.revoluteJoint(this.pinballBoard, this.rightFlipper, 6.4 * this.PTM, -7.99956 * this.PTM, 0, 0, 2, 100, false, -25, 25, true);
 
 		// LOWERING THE LEFT FLIPPER
 		this.leftFlipper.angle = 27;
@@ -770,44 +770,44 @@ Pinball.Game.prototype = {
 		this.scoreBackground = game.add.graphics();
 		this.scoreBackground.beginFill(0x000000, 0.7);
 		this.scoreBackground.lineStyle(2, 0x383838, 1);
-		this.scoreBackground.drawRoundedRect(-200, -540, 140, 40, 10);
+		this.scoreBackground.drawRoundedRect(-155, -540, 113.5, 40, 10);
 
 		// ADDING THE SCORE LABEL SHADOW
-		this.scoreLabelShadow = game.add.bitmapText(-157, -530.5, "ArialBlackWhite", "0", 25);
-		this.scoreLabelShadow.height = 30;
+		this.scoreLabelShadow = game.add.bitmapText(-145, -531.25, "ArialBlackWhite", "0", 27);
+		this.scoreLabelShadow.height = 32;
 		this.scoreLabelShadow.tint = 0x000000;
 
 		// ADDING THE SCORE LABEL
-		this.scoreLabel = game.add.bitmapText(-160, -532.5, "ArialBlackWhite", "0", 25);
-		this.scoreLabel.height = 30;
+		this.scoreLabel = game.add.bitmapText(-148, -533.25, "ArialBlackWhite", "0", 27);
+		this.scoreLabel.height = 32;
 
 		// ADDING THE HIGH SCORE BACKGROUND
 		this.highScoreBackground = game.add.graphics();
 		this.highScoreBackground.beginFill(0x022C5C, 1);
 		this.highScoreBackground.lineStyle(2, 0x0046A9, 1);
-		this.highScoreBackground.drawRoundedRect(50, -540, 140, 40, 10);
+		this.highScoreBackground.drawRoundedRect(30.5, -540, 129, 40, 10);
 
 		// ADDING THE HIGH SCORE ICON SHADOW
-		this.highScoreIconShadow = game.add.sprite(59, -530, "imageHighScore");
+		this.highScoreIconShadow = game.add.sprite(39, -531, "imageHighScore");
 		this.highScoreIconShadow.tint = 0x000000;
 
 		// ADDING THE HIGH SCORE ICON
-		this.highScoreIcon = game.add.sprite(57, -532, "imageHighScore");
+		this.highScoreIcon = game.add.sprite(37, -533, "imageHighScore");
 
 		// ADDING THE HIGH SCORE LABEL SHADOW
-		this.highScoreLabelShadow = game.add.bitmapText(92, -531, "ArialBlackWhite", this.getHighscore(), 25);
-		this.highScoreLabelShadow.height = 30;
+		this.highScoreLabelShadow = game.add.bitmapText(69, -531.25, "ArialBlackWhite", this.getHighscore(), 27);
+		this.highScoreLabelShadow.height = 32;
 		this.highScoreLabelShadow.tint = 0x000000;
 
 		// ADDING THE HIGH SCORE LABEL
-		this.highScoreLabel = game.add.bitmapText(89, -533, "ArialBlackWhite", this.getHighscore(), 25);
-		this.highScoreLabel.height = 30;
+		this.highScoreLabel = game.add.bitmapText(66, -533.25, "ArialBlackWhite", this.getHighscore(), 27);
+		this.highScoreLabel.height = 32;
 
 		// ADDING THE SOUND HANDLER ON BACKGROUND
 		this.soundHandlerOnBackground = game.add.graphics();
 		this.soundHandlerOnBackground.beginFill(0x022C5C, 1);
 		this.soundHandlerOnBackground.lineStyle(2, 0x0046A9, 1);
-		this.soundHandlerOnBackground.drawRoundedRect(-26.5, -540, 45, 40, 10);
+		this.soundHandlerOnBackground.drawRoundedRect(-28, -540, 45, 40, 10);
 		this.soundHandlerOnBackground.inputEnabled = true;
 		this.soundHandlerOnBackground.input.useHandCursor = true;
 		this.soundHandlerOnBackground.events.onInputUp.add(function()
@@ -825,13 +825,13 @@ Pinball.Game.prototype = {
 			},this);
 
 		// ADDING THE SOUND HANDLER ON SPRITE
-		this.soundHandlerOnSprite = game.add.sprite(-17.5, -531.25, "imageSoundOn");
+		this.soundHandlerOnSprite = game.add.sprite(-19, -531.25, "imageSoundOn");
 
 		// ADDING THE SOUND HANDLER OFF BACKGROUND
 		this.soundHandlerOffBackground = game.add.graphics();
 		this.soundHandlerOffBackground.beginFill(0x383838, 1);
 		this.soundHandlerOffBackground.lineStyle(2, 0x707070, 1);
-		this.soundHandlerOffBackground.drawRoundedRect(-26.5, -540, 45, 40, 10);
+		this.soundHandlerOffBackground.drawRoundedRect(-28, -540, 45, 40, 10);
 		this.soundHandlerOffBackground.inputEnabled = true;
 		this.soundHandlerOffBackground.input.useHandCursor = true;
 		this.soundHandlerOffBackground.events.onInputUp.add(function()
@@ -849,7 +849,7 @@ Pinball.Game.prototype = {
 			},this);
 
 		// ADDING THE SOUND HANDLER ON SPRITE
-		this.soundHandlerOffSprite = game.add.sprite(-17.5, -531.25, "imagesoundOff");
+		this.soundHandlerOffSprite = game.add.sprite(-19, -531.25, "imagesoundOff");
 
 		// ADDING THE NORMAL BUTTON A
 		this.buttonANormal = game.add.sprite(-10, 490, "imageButtonANormal");
@@ -972,6 +972,9 @@ Pinball.Game.prototype = {
 					}
 				}
 
+			// ENABLING THE LEFT FLIPPER
+			this.flipperJoints[0].m_enableMotor = true;
+
 			// RAISING THE LEFT FLIPPER
 			this.flipperJoints[0].SetMotorSpeed(-15);
 			}
@@ -999,6 +1002,9 @@ Pinball.Game.prototype = {
 					this.audioPlayer.play();
 					}
 				}
+
+			// ENABLING THE RIGHT FLIPPER
+			this.flipperJoints[1].m_enableMotor = true;
 
 			// RAISING THE RIGHT FLIPPER
 			this.flipperJoints[1].SetMotorSpeed(15);
@@ -1055,6 +1061,13 @@ Pinball.Game.prototype = {
 
 	updateScore: function(newScore)
 		{
+		// CHECKING IF THE USER HITS THE MAXIMUM SCORE POSSIBLE
+		if (newScore>9999)
+			{
+			// UPDATING THE USER SCORE
+			newScore = 9999;
+			}
+
 		// UPDATING THE SCORE WITH THE NEW VALUE
 		this.scoreValue = newScore;
 
