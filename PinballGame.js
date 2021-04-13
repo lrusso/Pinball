@@ -363,7 +363,7 @@ Pinball.Game.prototype = {
 
 		// ADDING THE PINBALL BOARD BACKGROUND LINE
 		this.pinballBoardLine = game.add.graphics(0, 0);
-		this.pinballBoardLine.lineStyle(2, 0x343434, 1);
+		this.pinballBoardLine.lineStyle(2.05, 0x343434, 1);
 		for(var i = 0; i < this.outlineVertices.length; i=i+2)
 			{
 			if (i==0)
