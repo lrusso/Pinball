@@ -195,6 +195,8 @@ Pinball.Menu.prototype = {
 		this.menuMainAppIcon = null;
 		this.menuMainAppTitleShadow = null;
 		this.menuMainAppTitle = null;
+		this.menuMainAppVersionShadow = null;
+		this.menuMainAppVersion = null;
 		this.menuMainPlayButton = null;
 		this.menuMainPlayButtonIcon = null;
 		this.menuMainSoundButton = null;
@@ -240,17 +242,16 @@ Pinball.Menu.prototype = {
 		this.menuMainAppTitle.height = 37;
 		this.menuMainAppTitle.position.x = game.width / 2 - this.menuMainAppTitle.width / 2;
 
+		// ADDING THE APP VERSION SHADOW
+		this.menuMainAppVersionShadow = game.add.bitmapText(0, 236, "ArialBlackShadow", "ver 1.2", 18);
+		this.menuMainAppVersionShadow.height = 21;
+		this.menuMainAppVersionShadow.tint = 0x000000;
+		this.menuMainAppVersionShadow.position.x = game.width / 2 - this.menuMainAppVersionShadow.width / 2 + 1;
 
-		// ADDING THE SUBTITLE 1 SHADOW
-		this.menuMainSubtitle1Shadow = game.add.bitmapText(0, 236, "ArialBlackShadow", "ver 1.2", 18);
-		this.menuMainSubtitle1Shadow.height = 21;
-		this.menuMainSubtitle1Shadow.tint = 0x000000;
-		this.menuMainSubtitle1Shadow.position.x = game.width / 2 - this.menuMainSubtitle1Shadow.width / 2 + 1;
-
-		// ADDING THE SUBTITLE 1 TEXT
-		this.menuMainSubtitle1 = game.add.bitmapText(0, 235, "ArialBlackShadow", "ver 1.2", 18);
-		this.menuMainSubtitle1.height = 21;
-		this.menuMainSubtitle1.position.x = game.width / 2 - this.menuMainSubtitle1.width / 2;
+		// ADDING THE APP VERSION
+		this.menuMainAppVersion = game.add.bitmapText(0, 235, "ArialBlackShadow", "ver 1.2", 18);
+		this.menuMainAppVersion.height = 21;
+		this.menuMainAppVersion.position.x = game.width / 2 - this.menuMainAppVersion.width / 2;
 
 		// ADDING THE PLAY BUTTON
 		this.menuMainPlayButton = game.add.button(0, 470, "imageMenuButton", null, this, 2, 1, 0);
