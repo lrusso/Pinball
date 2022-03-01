@@ -388,7 +388,7 @@ Pinball.Game = function(game)
 	this.guide2Vertices = [663,-743,614,-855,1119,-1121,1123,-1760,1200,-1759,1200,-959,663,-743];
 	this.guide3Vertices = [-1116,-1753,-1118,-1277,-838,-1110,-1116,-1753];
 	this.guide4Vertices = [671,-1110,956,-1282,956,-1762,671,-1110];
-	this.gutterVertices = [-480,413,293,413];
+	this.gutterVertices = [-480,650,293,650];
 	this.smallCircles = [-1320,-1759,1160,-1759];
 	this.mediumCircles = [-1500,-3132,-866,-3163,-290,-3074,187,-3415,614,-3074,-451,-2232,396,-2242];
 	this.largeCircles = [-446,-3704,309,-4133,990,-3750];
@@ -858,7 +858,7 @@ Pinball.Game.prototype = {
 			}, this);
 
 		// ADDING THE BALL LAUNCHER CONTAINER
-		this.launcherContainer = game.add.sprite(141.5, 51, "imageGameBlock");
+		this.launcherContainer = game.add.sprite(140, 51, "imageGameBlock");
 
 		// ADDING THE BALL LAUNCHER CONTAINER MASK
 		this.launcherContainerMask = game.add.graphics();
