@@ -1117,13 +1117,13 @@ Pinball.Game.prototype = {
 			}
 
 		// ADDING THE NORMAL BUTTON A
-		this.buttonANormal = game.add.sprite(-10, 495, "imageGameButtonANormal");
+		this.buttonANormal = game.add.sprite(-10, 497, "imageGameButtonANormal");
 		this.buttonANormal.fixedToCamera = true;
 		this.buttonANormal.tint = 0xAFAFAF;
 		this.buttonANormal.scale.set(0.8);
 
 		// ADDING THE PRESSED BUTTON A
-		this.buttonAPressed = game.add.sprite(-10, 495, "imageGameButtonAPressed");
+		this.buttonAPressed = game.add.sprite(-10, 497, "imageGameButtonAPressed");
 		this.buttonAPressed.fixedToCamera = true;
 		this.buttonAPressed.tint = 0xAFAFAF;
 		this.buttonAPressed.scale.set(0.8);
@@ -1132,7 +1132,7 @@ Pinball.Game.prototype = {
 		// ADDING THE BUTTON A HANDLER
 		this.buttonAHandler = game.add.graphics();
 		this.buttonAHandler.beginFill(0x000000, 0);
-		this.buttonAHandler.drawRect(-10, 495, 120, 120, 10);
+		this.buttonAHandler.drawRect(-10, 497, 120, 120, 10);
 		this.buttonAHandler.isDown = false;
 		this.buttonAHandler.inputEnabled = true;
 		this.buttonAHandler.fixedToCamera = true;
@@ -1140,13 +1140,13 @@ Pinball.Game.prototype = {
 		this.buttonAHandler.events.onInputUp.add(function(){this.buttonAHandler.isDown=false;this.buttonANormal.visible=true;this.buttonAPressed.visible=false;},this);
 
 		// ADDING THE NORMAL BUTTON B
-		this.buttonBNormal = game.add.sprite(210, 495, "imageGameButtonBNormal");
+		this.buttonBNormal = game.add.sprite(210, 497, "imageGameButtonBNormal");
 		this.buttonBNormal.fixedToCamera = true;
 		this.buttonBNormal.tint = 0xAFAFAF;
 		this.buttonBNormal.scale.set(0.8);
 
 		// ADDING THE PRESSED BUTTON B
-		this.buttonBPressed = game.add.sprite(210, 495, "imageGameButtonBPressed");
+		this.buttonBPressed = game.add.sprite(210, 497, "imageGameButtonBPressed");
 		this.buttonBPressed.fixedToCamera = true;
 		this.buttonBPressed.tint = 0xAFAFAF;
 		this.buttonBPressed.scale.set(0.8);
@@ -1155,7 +1155,7 @@ Pinball.Game.prototype = {
 		// ADDING THE BUTTON B HANDLER
 		this.buttonBHandler = game.add.graphics();
 		this.buttonBHandler.beginFill(0x000000, 0);
-		this.buttonBHandler.drawRect(210, 495, 120, 120, 10);
+		this.buttonBHandler.drawRect(210, 497, 120, 120, 10);
 		this.buttonBHandler.isDown = false;
 		this.buttonBHandler.inputEnabled = true;
 		this.buttonBHandler.fixedToCamera = true;
