@@ -205,6 +205,9 @@ Pinball.Menu.prototype = {
 
 	create: function()
 		{
+		// SHOWING THE BACKGROUND IMAGE
+		document.getElementsByClassName("background")[0].style.display = "block";
+
 		// GETTING THE SOUND PREFERENCE
 		GAME_SOUND_ENABLED = this.getBooleanSetting("GAME_SOUND_ENABLED");
 
@@ -392,8 +395,8 @@ Pinball.Game = function(game)
 	this.smallCircles = [-1320,-1759,1160,-1759];
 	this.mediumCircles = [-1500,-3132,-866,-3163,-290,-3074,187,-3415,614,-3074,-451,-2232,396,-2242];
 	this.largeCircles = [-446,-3704,309,-4133,990,-3750];
-	this.leftFlipperVertices = [560,32,560,-32,0,-64,0,64];
-	this.rightFlipperVertices = [0,64,0,-64,-560,-32,-560,32];
+	this.leftFlipperVertices = [560,32,560,-32,0,-50,0,94];
+	this.rightFlipperVertices = [0,94,0,-50,-560,-32,-560,32];
 	this.ballStart = [15.2016, -30];
 	this.PTM = 100; // CONVERSION RATIO FOR VALUES IN ARRAYS ABOVE
 
@@ -561,10 +564,25 @@ Pinball.Game.prototype = {
 		this.isMobileDevice = isMobileDevice();
 
 		// SETTING THE GAME BOUNDS
-		game.world.setBounds(-435, -552, 600, 335);
+		game.world.setBounds(-435, -540, 600, 335);
 
 		// ADDING THE BACKGROUND IMAGE
 		this.add.tileSprite(-170, -555, 600, 835, "imageGameBackground");
+
+		// SCALING THE PINBALL BOARD TO FIT THE SCREEN
+		for(var i = 0; i < this.outlineVertices.length; i++){this.outlineVertices[i] = this.outlineVertices[i] * 0.95;}
+		for(var i = 0; i < this.launcherVertices.length; i++){this.launcherVertices[i] = this.launcherVertices[i] * 0.95;}
+		for(var i = 0; i < this.guide1Vertices.length; i++){this.guide1Vertices[i] = this.guide1Vertices[i] * 0.95;}
+		for(var i = 0; i < this.guide2Vertices.length; i++){this.guide2Vertices[i] = this.guide2Vertices[i] * 0.95;}
+		for(var i = 0; i < this.guide3Vertices.length; i++){this.guide3Vertices[i] = this.guide3Vertices[i] * 0.95;}
+		for(var i = 0; i < this.guide4Vertices.length; i++){this.guide4Vertices[i] = this.guide4Vertices[i] * 0.95;}
+		for(var i = 0; i < this.gutterVertices.length; i++){this.gutterVertices[i] = this.gutterVertices[i] * 0.95;}
+		for(var i = 0; i < this.smallCircles.length; i++){this.smallCircles[i] = this.smallCircles[i] * 0.95;}
+		for(var i = 0; i < this.mediumCircles.length; i++){this.mediumCircles[i] = this.mediumCircles[i] * 0.95;}
+		for(var i = 0; i < this.largeCircles.length; i++){this.largeCircles[i] = this.largeCircles[i] * 0.95;}
+		for(var i = 0; i < this.leftFlipperVertices.length; i++){this.leftFlipperVertices[i] = this.leftFlipperVertices[i] * 0.95;}
+		for(var i = 0; i < this.rightFlipperVertices.length; i++){this.rightFlipperVertices[i] = this.rightFlipperVertices[i] * 0.95;}
+		for(var i = 0; i < this.ballStart.length; i++){this.ballStart[i] = this.ballStart[i] * 0.95;}
 
 		// CREATING THE PINBALL BOARD BACKGROUND MASK
 		this.pinballBoardMask = game.add.graphics(0, 0);
@@ -580,7 +598,7 @@ Pinball.Game.prototype = {
 		this.pinballBoardMask.endFill();
 
 		// ADDING THE PINBALL BOARD BACKGROUND IMAGE
-		this.pinballBoardImage = this.add.sprite(-150, -540, "imageGameBoard");
+		this.pinballBoardImage = this.add.sprite(-150, -530, "imageGameBoard");
 		this.pinballBoardImage.mask = this.pinballBoardMask;
 
 		// ADDING THE PINBALL BOARD BACKGROUND LINE
@@ -843,7 +861,7 @@ Pinball.Game.prototype = {
 			}, this);
 
 		// ADDING THE BALL LAUNCHER CONTAINER
-		this.launcherContainer = game.add.sprite(148.5, 50, "imageGameBlock");
+		this.launcherContainer = game.add.sprite(141.5, 51, "imageGameBlock");
 
 		// ADDING THE BALL LAUNCHER CONTAINER MASK
 		this.launcherContainerMask = game.add.graphics();
@@ -992,44 +1010,44 @@ Pinball.Game.prototype = {
 		this.scoreBackground = game.add.graphics();
 		this.scoreBackground.beginFill(0x000000, 0.7);
 		this.scoreBackground.lineStyle(2, 0x383838, 1);
-		this.scoreBackground.drawRoundedRect(-145, -540, 104, 40, 10);
+		this.scoreBackground.drawRoundedRect(-145, -530, 104, 40, 10);
 
 		// ADDING THE SCORE LABEL SHADOW
-		this.scoreLabelShadow = game.add.bitmapText(-135, -531.25, "ArialBlackWhite", "0", 27);
+		this.scoreLabelShadow = game.add.bitmapText(-135, -521.25, "ArialBlackWhite", "0", 27);
 		this.scoreLabelShadow.height = 32;
 		this.scoreLabelShadow.tint = 0x000000;
 
 		// ADDING THE SCORE LABEL
-		this.scoreLabel = game.add.bitmapText(-138, -533.25, "ArialBlackWhite", "0", 27);
+		this.scoreLabel = game.add.bitmapText(-138, -523.25, "ArialBlackWhite", "0", 27);
 		this.scoreLabel.height = 32;
 
 		// ADDING THE HIGH SCORE BACKGROUND
 		this.highScoreBackground = game.add.graphics();
 		this.highScoreBackground.beginFill(0x022C5C, 1);
 		this.highScoreBackground.lineStyle(2, 0x0046A9, 1);
-		this.highScoreBackground.drawRoundedRect(30.5, -540, 124, 40, 10);
+		this.highScoreBackground.drawRoundedRect(30.5, -530, 124, 40, 10);
 
 		// ADDING THE HIGH SCORE ICON SHADOW
-		this.highScoreIconShadow = game.add.sprite(39, -531, "imageGameHighScore");
+		this.highScoreIconShadow = game.add.sprite(39, -521, "imageGameHighScore");
 		this.highScoreIconShadow.tint = 0x000000;
 
 		// ADDING THE HIGH SCORE ICON
-		this.highScoreIcon = game.add.sprite(37, -533, "imageGameHighScore");
+		this.highScoreIcon = game.add.sprite(37, -523, "imageGameHighScore");
 
 		// ADDING THE HIGH SCORE LABEL SHADOW
-		this.highScoreLabelShadow = game.add.bitmapText(69, -531.25, "ArialBlackWhite", this.getHighscore(), 27);
+		this.highScoreLabelShadow = game.add.bitmapText(69, -521.25, "ArialBlackWhite", this.getHighscore(), 27);
 		this.highScoreLabelShadow.height = 32;
 		this.highScoreLabelShadow.tint = 0x000000;
 
 		// ADDING THE HIGH SCORE LABEL
-		this.highScoreLabel = game.add.bitmapText(66, -533.25, "ArialBlackWhite", this.getHighscore(), 27);
+		this.highScoreLabel = game.add.bitmapText(66, -523.25, "ArialBlackWhite", this.getHighscore(), 27);
 		this.highScoreLabel.height = 32;
 
 		// ADDING THE SOUND HANDLER ON BACKGROUND
 		this.soundHandlerOnBackground = game.add.graphics();
 		this.soundHandlerOnBackground.beginFill(0x022C5C, 1);
 		this.soundHandlerOnBackground.lineStyle(2, 0x0046A9, 1);
-		this.soundHandlerOnBackground.drawRoundedRect(-28, -540, 45, 40, 10);
+		this.soundHandlerOnBackground.drawRoundedRect(-28, -530, 45, 40, 10);
 		this.soundHandlerOnBackground.inputEnabled = true;
 		this.soundHandlerOnBackground.input.useHandCursor = true;
 		this.soundHandlerOnBackground.events.onInputUp.add(function()
@@ -1050,13 +1068,13 @@ Pinball.Game.prototype = {
 			},this);
 
 		// ADDING THE SOUND HANDLER ON SPRITE
-		this.soundHandlerOnSprite = game.add.sprite(-19, -531.25, "imageGameSoundOn");
+		this.soundHandlerOnSprite = game.add.sprite(-19, -521.25, "imageGameSoundOn");
 
 		// ADDING THE SOUND HANDLER OFF BACKGROUND
 		this.soundHandlerOffBackground = game.add.graphics();
 		this.soundHandlerOffBackground.beginFill(0x383838, 1);
 		this.soundHandlerOffBackground.lineStyle(2, 0x707070, 1);
-		this.soundHandlerOffBackground.drawRoundedRect(-28, -540, 45, 40, 10);
+		this.soundHandlerOffBackground.drawRoundedRect(-28, -530, 45, 40, 10);
 		this.soundHandlerOffBackground.inputEnabled = true;
 		this.soundHandlerOffBackground.input.useHandCursor = true;
 		this.soundHandlerOffBackground.events.onInputUp.add(function()
@@ -1077,7 +1095,7 @@ Pinball.Game.prototype = {
 			},this);
 
 		// ADDING THE SOUND HANDLER ON SPRITE
-		this.soundHandlerOffSprite = game.add.sprite(-19, -531.25, "imageGameSoundOff");
+		this.soundHandlerOffSprite = game.add.sprite(-19, -521.25, "imageGameSoundOff");
 
 		// CHECKING IF THE SOUND IS ENABLED
 		if (GAME_SOUND_ENABLED==true)
