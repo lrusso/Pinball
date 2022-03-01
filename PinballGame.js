@@ -205,9 +205,6 @@ Pinball.Menu.prototype = {
 
 	create: function()
 		{
-		// SHOWING THE BACKGROUND IMAGE
-		document.getElementsByClassName("background")[0].style.display = "block";
-
 		// GETTING THE SOUND PREFERENCE
 		GAME_SOUND_ENABLED = this.getBooleanSetting("GAME_SOUND_ENABLED");
 
