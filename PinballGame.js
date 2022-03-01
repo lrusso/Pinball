@@ -393,7 +393,7 @@ Pinball.Game = function(game)
 	this.mediumCircles = [-1500,-3132,-866,-3163,-290,-3074,187,-3415,614,-3074,-451,-2232,396,-2242];
 	this.largeCircles = [-446,-3704,309,-4133,990,-3750];
 	this.leftFlipperVertices = [560,32,560,-32,0,-50,0,94];
-	this.rightFlipperVertices = [0,94,0,-50,-560,-32,-560,32];
+	this.rightFlipperVertices = [0,94,0,-40,-560,-32,-560,32];
 	this.ballStart = [15.2016, -30];
 	this.PTM = 100; // CONVERSION RATIO FOR VALUES IN ARRAYS ABOVE
 
