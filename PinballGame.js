@@ -882,7 +882,7 @@ Pinball.Game.prototype = {
 		for(var i = 0; i < this.mediumCirclesList.length; i++)
 			{
 			// SETTING THE CALLBACK AND WHAT WILL HAPPEN WHEN THE BALL HITS A MEDIUM CIRCLE
-			this.ballBody.setFixtureContactCallback(this.mediumCirclesList[i], function (a,b,c,d,e)
+			this.ballBody.setFixturePresolveCallback(this.mediumCirclesList[i], function (a,b,c,d,e)
 				{
 				// CHECKING IF THE SOUND IS ENABLED
 				if (GAME_SOUND_ENABLED==true)
@@ -918,7 +918,7 @@ Pinball.Game.prototype = {
 		for(var i = 0; i < this.largeCirclesList.length; i++)
 			{
 			// SETTING THE CALLBACK AND WHAT WILL HAPPEN WHEN THE BALL HITS A LARGE CIRCLE
-			this.ballBody.setFixtureContactCallback(this.largeCirclesList[i], function (a,b,c,d,e)
+			this.ballBody.setFixturePresolveCallback(this.largeCirclesList[i], function (a,b,c,d,e)
 				{
 				// CHECKING IF THE SOUND IS ENABLED
 				if (GAME_SOUND_ENABLED==true)
