@@ -388,7 +388,8 @@ Pinball.Game = function(game)
 	this.guide2Vertices = [663,-743,614,-855,1119,-1121,1123,-1760,1200,-1759,1200,-959,663,-743];
 	this.guide3Vertices = [-1116,-1753,-1118,-1277,-838,-1110,-1116,-1753];
 	this.guide4Vertices = [671,-1110,956,-1282,956,-1762,671,-1110];
-	this.gutterVertices = [-480,650,293,650];
+	this.gutterVertices1 = [-480,650,293,650];
+	this.gutterVertices2 = [-480,750,293,750];
 	this.smallCircles = [-1320,-1759,1160,-1759];
 	this.mediumCircles = [-1500,-3132,-866,-3163,-290,-3074,187,-3415,614,-3074,-451,-2232,396,-2242];
 	this.largeCircles = [-446,-3704,309,-4133,990,-3750];
@@ -400,7 +401,8 @@ Pinball.Game = function(game)
 	this.pinballBoard = null;
 	this.pinballBoardMask = null;
 
-	this.gutterFixture = null;
+	this.gutterFixture1 = null;
+	this.gutterFixture2 = null;
 	this.launcherSprite = null;
 	this.launcherFixture = null;
 	this.launcherIsMoving = null;
@@ -489,7 +491,8 @@ Pinball.Game.prototype = {
 		this.pinballBoard = null;
 		this.pinballBoardMask = null;
 
-		this.gutterFixture = null;
+		this.gutterFixture1 = null;
+		this.gutterFixture2 = null;
 		this.launcherSprite = null;
 		this.launcherFixture = null;
 		this.launcherIsMoving = false;
@@ -573,7 +576,8 @@ Pinball.Game.prototype = {
 		for(var i = 0; i < this.guide2Vertices.length; i++){this.guide2Vertices[i] = this.guide2Vertices[i] * 0.95;}
 		for(var i = 0; i < this.guide3Vertices.length; i++){this.guide3Vertices[i] = this.guide3Vertices[i] * 0.95;}
 		for(var i = 0; i < this.guide4Vertices.length; i++){this.guide4Vertices[i] = this.guide4Vertices[i] * 0.95;}
-		for(var i = 0; i < this.gutterVertices.length; i++){this.gutterVertices[i] = this.gutterVertices[i] * 0.95;}
+		for(var i = 0; i < this.gutterVertices1.length; i++){this.gutterVertices1[i] = this.gutterVertices1[i] * 0.95;}
+		for(var i = 0; i < this.gutterVertices2.length; i++){this.gutterVertices2[i] = this.gutterVertices2[i] * 0.95;}
 		for(var i = 0; i < this.smallCircles.length; i++){this.smallCircles[i] = this.smallCircles[i] * 0.95;}
 		for(var i = 0; i < this.mediumCircles.length; i++){this.mediumCircles[i] = this.mediumCircles[i] * 0.95;}
 		for(var i = 0; i < this.largeCircles.length; i++){this.largeCircles[i] = this.largeCircles[i] * 0.95;}
@@ -815,9 +819,13 @@ Pinball.Game.prototype = {
 			this.largeCirclesGlowList[i].visible = false;
 			}
 
-		// ADDING THE GUTTER FIXTURE
-		this.gutterFixture = this.pinballBoard.addEdge(this.gutterVertices[0], this.gutterVertices[1], this.gutterVertices[2], this.gutterVertices[3]);
-		this.gutterFixture.SetSensor(true);
+		// ADDING THE FIRST GUTTER FIXTURE
+		this.gutterFixture1 = this.pinballBoard.addEdge(this.gutterVertices1[0], this.gutterVertices1[1], this.gutterVertices1[2], this.gutterVertices1[3]);
+		this.gutterFixture1.SetSensor(true);
+
+		// ADDING THE SECOND GUTTER FIXTURE (FAILSAFE)
+		this.gutterFixture2 = this.pinballBoard.addEdge(this.gutterVertices2[0], this.gutterVertices2[1], this.gutterVertices2[2], this.gutterVertices2[3]);
+		this.gutterFixture2.SetSensor(true);
 
 		// SETTING THE RESTITUTION FOR LAUNCHER
 		game.physics.box2d.restitution = 2.5;
@@ -829,8 +837,18 @@ Pinball.Game.prototype = {
 		this.ballBody.setCircle(0.64 * this.PTM);
 		this.ballBody.bullet = true;
 
-		// SETTING A CALLBACK WHEN THE BALL HITS THE GUTTER
-		this.ballBody.setFixtureContactCallback(this.gutterFixture, function()
+		// SETTING A CALLBACK WHEN THE BALL HITS THE FIRST GUTTER
+		this.ballBody.setFixtureContactCallback(this.gutterFixture1, function()
+			{
+			// CLEARING THE SCORE
+			this.updateScore(0);
+
+			// SETTING THAT THE GAME IS OVER
+			this.gameOver = true;
+			}, this);
+
+		// SETTING A CALLBACK WHEN THE BALL HITS THE SECOND GUTTER (FAILSAFE)
+		this.ballBody.setFixtureContactCallback(this.gutterFixture2, function()
 			{
 			// CLEARING THE SCORE
 			this.updateScore(0);
@@ -882,7 +900,7 @@ Pinball.Game.prototype = {
 		for(var i = 0; i < this.mediumCirclesList.length; i++)
 			{
 			// SETTING THE CALLBACK AND WHAT WILL HAPPEN WHEN THE BALL HITS A MEDIUM CIRCLE
-			this.ballBody.setFixturePresolveCallback(this.mediumCirclesList[i], function (a,b,c,d,e)
+			this.ballBody.setFixtureContactCallback(this.mediumCirclesList[i], function (a,b,c,d,e)
 				{
 				// CHECKING IF THE SOUND IS ENABLED
 				if (GAME_SOUND_ENABLED==true)
@@ -918,7 +936,7 @@ Pinball.Game.prototype = {
 		for(var i = 0; i < this.largeCirclesList.length; i++)
 			{
 			// SETTING THE CALLBACK AND WHAT WILL HAPPEN WHEN THE BALL HITS A LARGE CIRCLE
-			this.ballBody.setFixturePresolveCallback(this.largeCirclesList[i], function (a,b,c,d,e)
+			this.ballBody.setFixtureContactCallback(this.largeCirclesList[i], function (a,b,c,d,e)
 				{
 				// CHECKING IF THE SOUND IS ENABLED
 				if (GAME_SOUND_ENABLED==true)
