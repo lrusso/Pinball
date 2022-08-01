@@ -203,10 +203,10 @@ Pinball.Menu.prototype = {
 		this.menuMainPlayButtonIcon = null;
 		this.menuMainSoundButton = null;
 		this.menuMainSoundButtonIcon = null;
+		this.safariAudioFixPlayer = null;
 		this.clickTimestamp = null;
 		this.clickPositionX = null;
 		this.clickPositionY = null;
-		this.safariAudioFixPlayer = null;
 		},
 
 	create: function()
